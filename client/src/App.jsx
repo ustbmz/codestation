@@ -1,20 +1,30 @@
 import { Layout } from 'antd';
+import { useState } from 'react';
 import NavHeader from "./components/NavHeader";
 import PageFooter from "./components/PageFooter";
 import "./css/App.css";
 
 import RouterConfig from "./router/index.jsx"
+import LoginForm from './components/LoginForm'
 
 const { Header, Footer, Content } = Layout;
 
 
-function App() {
+function App () {
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
+  function closeModal () {
+    setIsModalOpen(false)
+  }
+   function loginHandle() {
+     setIsModalOpen(true)
+   }
 
   return (
     <div className="App">
       {/* 头部 */}
       <Header className="header">
-        <NavHeader />
+        <NavHeader loginHandle={loginHandle} />
       </Header>
       {/* 匹配上的路由页面 */}
       <Content className="content">
@@ -24,6 +34,8 @@ function App() {
       <Footer className="footer">
         <PageFooter />
       </Footer>
+      {/* 登录弹窗 */}
+      <LoginForm isShow={isModalOpen} closeModal={closeModal} />
     </div>
   )
 
