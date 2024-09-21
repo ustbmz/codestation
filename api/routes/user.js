@@ -124,7 +124,9 @@ router.patch("/:id", async function (req, res) {
  * 根据 loginId 来查找用户是否存在
  */
 router.get("/userIsExist/:loginId", async function (req, res) {
+  console.log('🐤 ≂ req:', req);
   const result = await userIsExistService(req.params.loginId);
+  console.log('🐤 ≂ result:', result);
   res.send(formatResponse(0, "", result));
 });
 

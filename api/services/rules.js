@@ -1,7 +1,7 @@
 const { validate } = require("validate.js");
-const { findAdminByLoginId } = require("../dao/adminDao");
-const { findUserByLoginId } = require("../dao/userDao");
-const { findTypeByTypeName } = require("../dao/typeDao");
+// const { findAdminByLoginId } = require("../dao/adminDao");
+const { findUserByLoginId } = require("../api/userControl");
+// const { findTypeByTypeName } = require("../dao/typeDao");
 
 /**
  * 管理员验证规则
@@ -33,13 +33,13 @@ exports.adminRule = {
  * 扩展验证规则
  * @returns
  */
-validate.validators.adminLoginIdIsExist = async function (loginId) {
-  const adminInfo = await findAdminByLoginId(loginId);
-  if (adminInfo.length) {
-    return "loginId is already exist";
-  }
-  return;
-};
+// validate.validators.adminLoginIdIsExist = async function (loginId) {
+//   const adminInfo = await findAdminByLoginId(loginId);
+//   if (adminInfo.length) {
+//     return "loginId is already exist";
+//   }
+//   return;
+// };
 
 /**
  * 用户验证规则
@@ -83,13 +83,13 @@ exports.typeRule = {
  * 扩展验证规则
  * @returns
  */
-validate.validators.typeIsExist = async function (typeName) {
-  const typeInfo = await findTypeByTypeName(typeName);
-  if (typeInfo.length) {
-    return "type is already exist";
-  }
-  return;
-};
+// validate.validators.typeIsExist = async function (typeName) {
+//   const typeInfo = await findTypeByTypeName(typeName);
+//   if (typeInfo.length) {
+//     return "type is already exist";
+//   }
+//   return;
+// };
 
 /**
  * 书籍验证规则

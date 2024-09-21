@@ -16,7 +16,7 @@ require("./db/init");
 // const issueRouter = require("./routes/issue");
 // const adminRouter = require("./routes/admin");
 const captchaRouter = require("./routes/captcha");
-// const userRouter = require("./routes/user");
+const userRouter = require("./routes/user");
 // const typeRouter = require("./routes/type");
 // const interviewRouter = require("./routes/interview");
 // const commentRouter = require("./routes/comment");
@@ -44,16 +44,16 @@ app.use(express.static(path.join(__dirname, "public")));
 // app.use("/api/book", bookRouter);
 // app.use("/api/issue", issueRouter);
 // app.use("/api/admin", adminRouter);
-// app.use("/api/user", userRouter);
+app.use("/api/user", userRouter);
 // app.use("/api/type", typeRouter);
 // app.use("/api/comment", commentRouter);
 // app.use("/api/interview", interviewRouter);
 // app.use("/api/upload", uploadRouter);
-app.use("/res/captcha", captchaRouter);
+app.use('/api/captcha', captchaRouter)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
-  next(createError(404));
+  next();
 });
 
 // 错误处理，一旦发生了错误，就会到这里来
