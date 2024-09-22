@@ -15,13 +15,11 @@ import {
   userIsExist,
   addUser,
   userLogin,
-  getUserById,
 } from '../api/user'
-
 
 import { initUserInfo, changeLoginStatus } from '../redux/userSlice'
 import { useDispatch } from 'react-redux'
-
+import md5 from 'md5'
 import styles from '../css/LoginForm.module.css'
 
 function LoginForm(props) {
@@ -40,6 +38,7 @@ function LoginForm(props) {
   // 注册表单的状态数据
   const [registerInfo, setRegisterInfo] = useState({
     loginId: '',
+    loginPwd: '',
     nickname: '',
     captcha: '',
   })
@@ -60,25 +59,19 @@ function LoginForm(props) {
 
   async function loginHandle() {
     const result = await userLogin(loginInfo)
+    console.log('🐤 ≂ result:', result)
     if (result.data) {
       // 验证码是正确的
       // 接下来会有这么几种情况 （1）密码不正确 （2）账户被冻结 （3）账户正常，能够正常登录
       const data = result.data
-      if (!data.data) {
-        // 账号密码不正确
-        message.error('账号或密码不正确')
-        captchaClickHandle()
-      } else if (!data.data.enabled) {
-        // 账号被禁用了
-        message.warning('账号被禁用')
-        captchaClickHandle()
-      } else {
+
+      if (result.code === 0) {
+        message.success(result.msg)
         // 说明账号密码正确，能够登录
         // 存储 token
-        localStorage.userToken = data.token
+        localStorage.userToken = result.token
         // 将用户的信息存储到状态仓库，方便后面使用
-        const result = await getUserById(data.data._id)
-        dispatch(initUserInfo(result.data))
+        dispatch(initUserInfo(data))
         dispatch(changeLoginStatus(true))
         handleCancel()
       }
@@ -105,6 +98,7 @@ function LoginForm(props) {
   }
 
   async function registerHandle() {
+    registerInfo.loginPwd = md5('admin123')
     const result = await addUser(registerInfo)
     if (result.data) {
       message.success('用户注册成功，默认密码为 123456')
@@ -363,9 +357,7 @@ function LoginForm(props) {
             </Row>
           </Form.Item>
 
-          <Form.Item
-            {...buttonItemLayout}
-          >
+          <Form.Item {...buttonItemLayout}>
             <Button
               type="primary"
               htmlType="submit"

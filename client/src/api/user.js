@@ -14,17 +14,9 @@ export function userIsExist(id) {
     method: 'GET',
   })
 }
-
-export function userLogin(userId) {
+export function getUserById(id) {
   return request({
-    url: `/user/userIsExist/${userId}`,
-    method: 'GET',
-  })
-}
-
-export function getUserById(userId) {
-  return request({
-    url: `/user/userIsExist/${userId}`,
+    url: `/user/${id}`,
     method: 'GET',
   })
 }
@@ -38,3 +30,20 @@ export function addUser(userInfo) {
     data: userInfo,
   })
 }
+
+export function userLogin(userInfo) {
+  console.log('🐤 ≂ userInfo:', userInfo)
+  return request({
+    url: `/user/login/`,
+    method: 'POST',
+    data: userInfo,
+  })
+}
+
+export function getInfoWithToken() {
+  return request({
+    url: `/user/whoami/`,
+    method: 'GET',
+  })
+}
+

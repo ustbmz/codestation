@@ -14,9 +14,5 @@ module.exports = function (app) {
       target: 'http://127.0.0.1:7001',
       changeOrigin: true,
     }),
-    createProxyMiddleware('/static', {
-      target: 'http://127.0.0.1:7001',
-      changeOrigin: true,
-    })
   )
 }

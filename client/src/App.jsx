@@ -1,24 +1,40 @@
-import { Layout } from 'antd';
-import { useState } from 'react';
-import NavHeader from "./components/NavHeader";
-import PageFooter from "./components/PageFooter";
-import "./css/App.css";
+import { Layout } from 'antd'
+import { useState, useEffect } from 'react'
+import NavHeader from './components/NavHeader'
+import PageFooter from './components/PageFooter'
+import './css/App.css'
 
-import RouterConfig from "./router/index.jsx"
+import RouterConfig from './router/index.jsx'
 import LoginForm from './components/LoginForm'
+import { getInfoWithToken, getUserById } from './api/user'
+import { useDispatch} from 'react-redux'
+import { initUserInfo, changeLoginStatus } from './redux/userSlice.js'
 
-const { Header, Footer, Content } = Layout;
+const { Header, Footer, Content } = Layout
 
-
-function App () {
+function App() {
   const [isModalOpen, setIsModalOpen] = useState(false)
-
-  function closeModal () {
+  const dispatch = useDispatch()
+  function closeModal() {
     setIsModalOpen(false)
   }
-   function loginHandle() {
-     setIsModalOpen(true)
-   }
+  function loginHandle() {
+    setIsModalOpen(true)
+  }
+
+  useEffect(() => {
+    async function getInfo() {
+      const { data } = await getInfoWithToken()
+      console.log('result:', data)
+      if (data._id) {
+        const res = await getUserById(data._id)
+        console.log('🐤 ≂ res:', res)
+        dispatch(initUserInfo(data))
+        dispatch(changeLoginStatus(true))
+      }
+    }
+    getInfo()
+  }, [])
 
   return (
     <div className="App">
@@ -38,7 +54,6 @@ function App () {
       <LoginForm isShow={isModalOpen} closeModal={closeModal} />
     </div>
   )
-
 }
 
-export default App;
+export default App

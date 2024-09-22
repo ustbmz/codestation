@@ -14,6 +14,8 @@ service.interceptors.request.use(
     const token = localStorage.getItem('userToken')
     if (token) {
       config.headers['Authorization'] = 'Bearer ' + token
+      config.headers['Cache-Control'] = 'no-cache'
+      
     }
 
     // 请求放行
