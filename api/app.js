@@ -46,7 +46,12 @@ app.use(express.static(path.join(__dirname, "public")));
 // app.use("/api/issue", issueRouter);
 // app.use("/api/admin", adminRouter);
 app.use("/api/user", userRouter);
-app.use('/api/addUser', userRouter)
+// app.use('/api/addUser', userRouter)
+// app.use('/api/login', userRouter)
+// app.use('/api/whoami', userRouter)
+// app.use('/api/:id', userRouter)
+
+
 
 // app.use("/api/type", typeRouter);
 // app.use("/api/comment", commentRouter);

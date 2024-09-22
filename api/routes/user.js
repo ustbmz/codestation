@@ -25,18 +25,19 @@ const { ValidationError } = require('../utils/errors')
  * 用户登录
  */
 router.post('/login', async function (req, res, next) {
-  console.log(req.body.captcha, 'req.body.captcha')
-  console.log(req.session.captcha, 'req.session.captcha')
+  console.log('🐤 ≂ req:', req.body.type)
+  console.log('🐤 ≂ req:', req.body)
+  console.log('🐤 ≂ req.session.captcha', req.session.captcha)
 
   // 首先应该有一个验证码的验证
-  if (req.body.captcha.toLowerCase() !== req.session.captcha.toLowerCase()) {
-    // 如果进入此 if，说明是有问题的，用户输入的验证码不正确
-    next(new ValidationError('验证码错误'))
-    return
-  }
+  // if (req.body.captcha.toLowerCase() !== req.session.captcha.toLowerCase()) {
+  //   // 如果进入此 if，说明是有问题的，用户输入的验证码不正确
+  //   next(new ValidationError('验证码错误'))
+  //   return
+  // }
   const result = await loginService(req.body)
   // 对返回数据进行格式化
-  res.send(formatResponse(0, '', result))
+  res.send(result)
 })
 
 /**
@@ -45,15 +46,19 @@ router.post('/login', async function (req, res, next) {
 router.get('/whoami', async function (req, res, next) {
   // 1. 从客户端请求头的 Authorization 字段拿到 token，然后进行解析
   const token = analysisToken(req.get('Authorization'))
+  console.log('🐤 ≂ whoami req.get:', req.get('Authorization'))
+  console.log('🐤 ≂ whoami token:', token)
   // 查看解析 token 是否成功
   if (token) {
     // 2. 返回给客户端解析结果
-    res.send(
-      formatResponse(0, '', {
-        _id: token._id,
-        loginId: token.loginId,
-      })
-    )
+    res.send({
+      code: 0,
+      data: {
+        _id: token._doc._id,
+        loginId: token._doc.loginId,
+        nickname: token._doc.nickname,
+      },
+    })
   } else {
     next(new ValidationError('登录过期，请重新登录'))
   }
@@ -62,11 +67,11 @@ router.get('/whoami', async function (req, res, next) {
 /**
  * 根据分页查找用户
  */
-router.get('/', async function (req, res) {
-  const result = await findUserByPageService(req.query)
-  // 对返回数据进行格式化
-  res.send(formatResponse(0, '', result))
-})
+// router.get('/', async function (req, res) {
+//   const result = await findUserByPageService(req.query)
+//   // 对返回数据进行格式化
+//   res.send(formatResponse(0, '', result))
+// })
 
 router.get('/pointsrank', async function (req, res) {
   const result = await findUserByPointsRankService()

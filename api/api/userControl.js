@@ -1,7 +1,7 @@
 const userModel = require('../models/userModel')
 
 // 判断登录用户是否存在
-module.exports.findUserByLoginId = async (loginId) => {
+module.exports.findUserByName = async (loginId) => {
   return await userModel.find({loginId})
 }
 
