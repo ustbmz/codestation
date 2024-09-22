@@ -126,10 +126,10 @@ function LoginForm(props) {
    * @param {*} key 对应的键名
    * @param {*} setInfo 修改状态值的函数
    */
-  function updateInfo(oldInfo, newContent, key, setInfo) {
+  function updateInfo(oldInfo, newContent, key, fn) {
     const obj = { ...oldInfo }
     obj[key] = newContent
-    setInfo(obj)
+    fn(obj)
   }
 
   async function captchaClickHandle() {
@@ -151,6 +151,8 @@ function LoginForm(props) {
   }
 
   let container = null
+  const formLayout = { labelCol: { span: 6 }, wrapperCol: { span: 16 } }
+  const buttonItemLayout = { wrapperCol: { span: 14, offset: 6 } }
   if (value === 1) {
     // 登录面板的 JSX
     container = (
@@ -160,6 +162,7 @@ function LoginForm(props) {
           autoComplete="off"
           onFinish={loginHandle}
           ref={loginFormRef}
+          {...formLayout}
         >
           <Form.Item
             label="登录账号"
@@ -238,7 +241,7 @@ function LoginForm(props) {
           <Form.Item
             name="remember"
             wrapperCol={{
-              offset: 5,
+              offset: 6,
               span: 16,
             }}
           >
@@ -257,12 +260,7 @@ function LoginForm(props) {
             </Checkbox>
           </Form.Item>
 
-          <Form.Item
-            wrapperCol={{
-              offset: 5,
-              span: 16,
-            }}
-          >
+          <Form.Item {...buttonItemLayout}>
             <Button
               type="primary"
               htmlType="submit"
@@ -286,6 +284,7 @@ function LoginForm(props) {
           autoComplete="off"
           ref={registerFormRef}
           onFinish={registerHandle}
+          {...formLayout}
         >
           <Form.Item
             label="登录账号"
@@ -365,10 +364,7 @@ function LoginForm(props) {
           </Form.Item>
 
           <Form.Item
-            wrapperCol={{
-              offset: 5,
-              span: 16,
-            }}
+            {...buttonItemLayout}
           >
             <Button
               type="primary"
@@ -389,10 +385,11 @@ function LoginForm(props) {
   return (
     <div>
       <Modal
-        title="注册/登录"
+        title="登录"
         open={props.isShow}
         onOk={handleOk}
         onCancel={props.closeModal}
+        footer={null}
       >
         <Radio.Group
           value={value}
