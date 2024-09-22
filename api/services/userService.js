@@ -2,7 +2,7 @@ const md5 = require('md5')
 const jwt = require('jsonwebtoken')
 const { validate } = require('validate.js')
 
-const { findUserByLoginId, findUserByIdDao } = require('../api/userControl')
+const { findUserByLoginId, findUserById,addUser } = require('../api/userControl')
 const { userRule } = require('./rules')
 const { ValidationError } = require('../utils/errors')
 const { randomAvatar } = require('../utils/tools')
@@ -13,6 +13,7 @@ const { randomAvatar } = require('../utils/tools')
  */
 module.exports.userIsExistService = async function (loginId) {
   const data = await findUserByLoginId(loginId)
+  console.log('🐤 ≂ data:', data);
   if (data.length) {
     return true
   } else {
@@ -29,4 +30,15 @@ module.exports.findUserByIdService = async function (id) {
   console.log('🐤 ≂ id:', id);
   return await findUserByIdDao(id);
 };
+
+
+module.exports.findUserByIdService = async function (id) {
+  console.log('🐤 ≂ id:', id)
+  return await findUserById(id)
+}
+
+module.exports.addUserService = async function (data) {
+  console.log('🐤 ≂ reg:', data)
+  return await addUser(data)
+}
 

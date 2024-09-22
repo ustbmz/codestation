@@ -17,6 +17,7 @@ require("./db/init");
 // const adminRouter = require("./routes/admin");
 const captchaRouter = require("./routes/captcha");
 const userRouter = require("./routes/user");
+
 // const typeRouter = require("./routes/type");
 // const interviewRouter = require("./routes/interview");
 // const commentRouter = require("./routes/comment");
@@ -45,6 +46,8 @@ app.use(express.static(path.join(__dirname, "public")));
 // app.use("/api/issue", issueRouter);
 // app.use("/api/admin", adminRouter);
 app.use("/api/user", userRouter);
+app.use('/api/addUser', userRouter)
+
 // app.use("/api/type", typeRouter);
 // app.use("/api/comment", commentRouter);
 // app.use("/api/interview", interviewRouter);

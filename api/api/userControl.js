@@ -10,10 +10,14 @@ module.exports.findUserByLoginId = async (loginId) => {
  * @param {*} id 要查找的用户 id
  * @returns
  */
-module.exports.findUserByIdDao = async function (id) {
+module.exports.findUserById = async function (id) {
   return userModel.findOne({
     _id: id,
   });
+};
+
+module.exports.addUser = async function (userInfo) {
+  return await userModel.create(userInfo);
 };
 
 
