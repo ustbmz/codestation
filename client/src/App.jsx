@@ -7,7 +7,7 @@ import './css/App.css'
 import RouterConfig from './router/index.jsx'
 import LoginForm from './components/LoginForm'
 import { getInfoWithToken, getUserById } from './api/user'
-import { useDispatch} from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { initUserInfo, changeLoginStatus } from './redux/userSlice.js'
 
 const { Header, Footer, Content } = Layout
@@ -25,11 +25,9 @@ function App() {
   useEffect(() => {
     async function getInfo() {
       const { data } = await getInfoWithToken()
-      console.log('result:', data)
       if (data._id) {
         const res = await getUserById(data._id)
-        console.log('🐤 ≂ res:', res)
-        dispatch(initUserInfo(data))
+        dispatch(initUserInfo(res.data))
         dispatch(changeLoginStatus(true))
       }
     }

@@ -59,7 +59,6 @@ function LoginForm(props) {
 
   async function loginHandle() {
     const result = await userLogin(loginInfo)
-    console.log('🐤 ≂ result:', result)
     if (result.data) {
       // 验证码是正确的
       // 接下来会有这么几种情况 （1）密码不正确 （2）账户被冻结 （3）账户正常，能够正常登录
