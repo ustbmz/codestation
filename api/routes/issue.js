@@ -13,15 +13,16 @@ const {
   updateIssueService,
   deleteIssueService,
   searchIssueByPageService,
-} = require("../services/issueService");
+} = require('../services/issueService')
 
 const { formatResponse } = require("../utils/tools");
 
 /**
  * 根据分页获取问答信息
  */
-router.get("/", async function (req, res) {
-  const result = await findIssueByPageService(req.query);
+router.get("/getIssue", async function (req, res) {
+  const result = await findIssueByPageService(req.query)
+  console.log('🐤 ≂ result:', result);
   res.send(formatResponse(0, "", result));
 });
 

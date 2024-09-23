@@ -16,13 +16,16 @@ module.exports.formatResponse = function (code, msg, data) {
 
 // 解析客户端传递过来的 token
 module.exports.analysisToken = function (token) {
-  return jwt.verify(
-    token.split(" ")[1],
-    md5(process.env.JWT_SECRET),
-    function (err, decode) {
-      return decode;
-    }
-  );
+  if (token){
+    return jwt.verify(
+      token.split(' ')[1],
+      md5(process.env.JWT_SECRET),
+      function (err, decode) {
+        return decode
+      }
+    )
+  }
+  return null
 };
 
 /**

@@ -13,7 +13,7 @@ require("./db/init");
 
 // 引入路由
 // const bookRouter = require("./routes/book");
-// const issueRouter = require("./routes/issue");
+const issueRouter = require("./routes/issue");
 // const adminRouter = require("./routes/admin");
 const captchaRouter = require("./routes/captcha");
 const userRouter = require("./routes/user");
@@ -43,7 +43,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // 使用路由中间件
 // app.use("/api/book", bookRouter);
-// app.use("/api/issue", issueRouter);
+app.use("/api/issue", issueRouter);
 // app.use("/api/admin", adminRouter);
 app.use("/api/user", userRouter);
 // app.use('/api/addUser', userRouter)

@@ -1,24 +1,25 @@
 const {
-  findIssueByPageDao,
   findIssueByIdDao,
   addIssueDao,
   deleteIssueDao,
   updateIssueDao,
   searchIssueByPageDao
-} = require("../dao/issueDao");
-const {
-  findIssueCommentByIdDao,
-  deleteCommentDao,
-} = require("../dao/commentDao");
+} = require("../api/issueControl");
+// const {
+//   findIssueCommentByIdDao,
+//   deleteCommentDao,
+// } = require('../api/issueControl')
 const { validate } = require("validate.js");
 const { issueRule } = require("./rules");
 const { ValidationError } = require("../utils/errors");
+
+const issueModel = require('../models/issueModel')
 
 /**
  * 按分页查询问答
  */
 module.exports.findIssueByPageService = async function (queryObj) {
-  return await findIssueByPageDao(queryObj);
+  return await issueModel.find(queryObj)
 };
 
 /**
@@ -56,19 +57,19 @@ module.exports.addIssueService = async function (newIssueInfo) {
 /**
  * 删除某一个问答
  */
-module.exports.deleteIssueService = async function (id) {
-  // 首先需要删除该问答对应的评论
+// module.exports.deleteIssueService = async function (id) {
+//   // 首先需要删除该问答对应的评论
 
-  // 获取该 issueId 对应的所有评论
-  const commentResult = await findIssueCommentByIdDao(id);
+//   // 获取该 issueId 对应的所有评论
+//   const commentResult = await findIssueCommentByIdDao(id);
 
-  for (let i = 0; i < commentResult.length; i++) {
-    await deleteCommentDao(commentResult[i]._id);
-  }
+//   for (let i = 0; i < commentResult.length; i++) {
+//     await deleteCommentDao(commentResult[i]._id);
+//   }
 
-  // 接下来再删除该问答
-  return await deleteIssueDao(id);
-};
+//   // 接下来再删除该问答
+//   return await deleteIssueDao(id);
+// };
 
 /**
  * 修改某一个问答
