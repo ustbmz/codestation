@@ -1,18 +1,14 @@
-const {
-  findAllTypeDao,
-  addTypeDao,
-  deleteTypeDao,
-  updateTypeDao,
-} = require("../dao/typeDao");
+
 const { validate } = require("validate.js");
 const { typeRule } = require("./rules");
 const { ValidationError } = require("../utils/errors");
+const typeModel = require('../models/typeModel')
 
 /**
  * 查询所有类型
  */
 module.exports.findAllTypeService = async function () {
-  return await findAllTypeDao();
+  return await typeModel.find()
 };
 
 /**

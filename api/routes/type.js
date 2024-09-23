@@ -14,10 +14,11 @@ const {
 
 const { formatResponse } = require("../utils/tools");
 
+
 /**
  * 查找所有类型
  */
-router.get("/", async function (req, res) {
+router.get("/getTypes", async function (req, res) {
   const result = await findAllTypeService();
   // 对返回数据进行格式化
   res.send(formatResponse(0, "", result));

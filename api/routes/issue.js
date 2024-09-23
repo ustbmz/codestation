@@ -22,7 +22,6 @@ const { formatResponse } = require("../utils/tools");
  */
 router.get("/getIssue", async function (req, res) {
   const result = await findIssueByPageService(req.query)
-  console.log('🐤 ≂ result:', result);
   res.send(formatResponse(0, "", result));
 });
 

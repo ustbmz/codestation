@@ -1,18 +1,18 @@
 const md5 = require('md5')
 const jwt = require('jsonwebtoken')
 const { validate } = require('validate.js')
-
-const { findUserByName, addUser, findUserById } = require('../api/userControl')
 const { userRule } = require('./rules')
 const { ValidationError } = require('../utils/errors')
 const { randomAvatar } = require('../utils/tools')
+const userModel = require('../models/userModel')
+
 
 /**
  *
  * @param {*} loginId 用户的登录账号
  */
-module.exports.userIsExistService = async function (name) {
-  const data = await findUserByName(name)
+module.exports.userIsExistService = async function (loginId) {
+  const data = await userModel.find({ loginId })
   console.log('🐤 ≂ data:', data)
   if (data.length) {
     return true
@@ -27,19 +27,20 @@ module.exports.userIsExistService = async function (name) {
  * @returns
  */
 module.exports.findUserByIdService = async function (id) {
-  console.log('🐤 ≂ id:', id)
-  return await findUserById(id)
+  // return await findUserById(id)
+  return userModel.findOne({
+    _id: id,
+  })
 }
 
 module.exports.addUserService = async function (data) {
-  console.log('🐤 ≂ reg:', data)
-  return await addUser(data)
+  return await userModel.create(userInfo)
 }
 
 module.exports.loginService = async function (userInfo) {
   console.log('🐤 ≂ userInfo:', userInfo)
   const { loginId, loginPwd } = userInfo
-  const user = await findUserByName(loginId)
+  const user = await userModel.find({ loginId })
   console.log('🐤 ≂ user:', user)
   if (!user.length) {
     return {

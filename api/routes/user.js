@@ -106,10 +106,10 @@ router.post('/addUser', async function (req, res, next) {
 /**
  * 根据 id 删除用户
  */
-router.delete('/:id', async function (req, res) {
-  const result = await deleteUserService(req.params.id)
-  res.send(formatResponse(0, '', result))
-})
+// router.delete('/:id', async function (req, res) {
+//   const result = await deleteUserService(req.params.id)
+//   res.send(formatResponse(0, '', result))
+// })
 
 /**
  * 根据 id 查找用户
@@ -132,7 +132,6 @@ router.patch('/:id', async function (req, res) {
  */
 router.get('/userIsExist/:loginId', async function (req, res) {
   const result = await userIsExistService(req.params.loginId)
-  console.log('🐤 ≂ result:', result)
   res.send(formatResponse(0, '', result))
 })
 
