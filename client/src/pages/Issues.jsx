@@ -7,7 +7,10 @@ import IssueItem from '../components/IssueItem'
 import Recommend from '../components/Recommend'
 import ScoreRank from '../components/ScoreRank'
 
-import { Pagination, Button } from 'antd'
+import { Pagination, Button, message } from 'antd'
+import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+
 function Issues(props) {
   const [issues, setIssues] = useState([])
   // 页码
@@ -17,6 +20,8 @@ function Issues(props) {
   })
   // 问答总数
   const [total, setTotal] = useState(0)
+  const navigate = useNavigate()
+  const { isLogin } = useSelector((state) => state.user)
 
   useEffect(() => {
     async function fetchData() {
@@ -58,7 +63,15 @@ function Issues(props) {
     }
   }
 
-  const addIssueHandle = () => {}
+  function AddIssue() {
+    console.log('🐤 ≂ AddIssue:', isLogin)
+    if (isLogin) {
+      console.log('🐤 ≂ isLogin:', isLogin)
+      navigate('/addIssue')
+    } else {
+      message.warn('请先登陆')
+    }
+  }
 
   return (
     <div className={styles.container}>
@@ -85,12 +98,14 @@ function Issues(props) {
               marginBottom: '30px',
               width: '100%',
             }}
-            onClick={addIssueHandle}
+            onClick={() => {
+              AddIssue()
+            }}
           >
             我要提问
           </Button>
-          <Recommend/>
-          <ScoreRank/>
+          <Recommend />
+          <ScoreRank />
         </div>
       </div>
     </div>

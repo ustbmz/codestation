@@ -28,7 +28,6 @@ function IssueItem(props) {
 
       const getUserInfo = async function () {
         let { data } = await getUserById(props.issueInfo.userId)
-        console.log('🐤 ≂ userinfo:', data.nickname);
         setUserIfno(data)
       }
 

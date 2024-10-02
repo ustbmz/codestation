@@ -23,7 +23,6 @@ export function getUserById(id) {
 
 export function addUser(userInfo) {
   userInfo.avatar = '/static/default.png'
-  console.log('🐤 ≂ userInfo:', userInfo);
   return request({
     url: `/user/addUser/`,
     method: 'POST',
@@ -32,7 +31,6 @@ export function addUser(userInfo) {
 }
 
 export function userLogin(userInfo) {
-  console.log('🐤 ≂ userInfo:', userInfo)
   return request({
     url: `/user/login/`,
     method: 'POST',
