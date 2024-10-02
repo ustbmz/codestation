@@ -50,7 +50,6 @@ module.exports.findUserByPointsRankService = async function () {
 }
 
 module.exports.loginService = async function (userInfo) {
-  console.log('🐤 ≂ userInfo:', userInfo)
   const { loginId, loginPwd } = userInfo
   const user = await userModel.find({ loginId })
   console.log('🐤 ≂ user:', user)

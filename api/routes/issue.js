@@ -36,7 +36,10 @@ router.get("/:id", async function (req, res) {
 /**
  * 新增问答
  */
-router.post("/", async function (req, res, next) {
+router.post("/addIssue", async function (req, res, next) {
+  console.log('🐤 ≂ req:', req);
+  console.log('🐤 ≂ req:', req.body)
+  
   const result = await addIssueService(req.body);
   if (result && result._id) {
     res.send(formatResponse(0, "", result));

@@ -35,7 +35,6 @@ module.exports.addIssueService = async function (newIssueInfo) {
   const validateResult = validate.validate(newIssueInfo, issueRule)
   if (!validateResult) {
     // 验证通过
-
     // 添加其他信息
     newIssueInfo.scanNumber = 0 // 浏览数，默认为 0
     newIssueInfo.commentNumber = 0 // 评论数，默认为 0
@@ -45,7 +44,7 @@ module.exports.addIssueService = async function (newIssueInfo) {
     // 添加状态，默认是未过审状态
     newIssueInfo.issueStatus = false
 
-    return await issueModel.add(newIssueInfo)
+    return await issueModel.create(newIssueInfo)
   } else {
     // 数据验证失败
     return new ValidationError('数据验证失败')
