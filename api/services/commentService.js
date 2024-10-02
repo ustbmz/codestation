@@ -4,16 +4,11 @@
 
 const { validate } = require("validate.js");
 
-const {
-  findCommentByPageAndTypeDao,
-  addCommentDao,
-  deleteCommentDao,
-  findIssueCommentByIdDao,
-  findBookCommentByIdDao,
-} = require("../dao/commentDao");
 
 const { commentRule } = require("./rules");
 const { ValidationError } = require("../utils/errors");
+const commentModel = require('../models/commentModel')
+
 
 /**
  * 根据分页查找对应模块评论
@@ -29,14 +24,18 @@ module.exports.findCommentByPageAndTypeService = async function (
  * 按照分页获取问答模块某一问题对应的评论
  */
 module.exports.findIssueCommentByIdService = async function (id, pager) {
-  return await findIssueCommentByIdDao(id, pager);
+  let issueInfo =  await commentModel.find({
+    issueId: id,
+  })
 };
 
 /**
  * 按照分页获取书籍模块某一本书对应的评论
  */
-module.exports.findBookCommentByIdService = async function (id, pager) {
-  return await findBookCommentByIdDao(id, pager);
+module.exports.findBookCommentByIdService = async function (id) {
+  return await commentModel.findOne({
+    issueId: id,
+  })
 };
 
 /**

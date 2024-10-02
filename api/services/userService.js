@@ -12,7 +12,6 @@ const userModel = require('../models/userModel')
  */
 module.exports.userIsExistService = async function (loginId) {
   const data = await userModel.find({ loginId })
-  console.log('🐤 ≂ data:', data)
   if (data.length) {
     return true
   } else {

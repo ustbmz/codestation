@@ -28,11 +28,9 @@ module.exports.findIssueByIdService = async function (id) {
   let res =  await issueModel.findOne({
     _id: id,
   })
-  console.log('🐤 ≂ res:', res);
   let userInfo = await userModel.findOne({
     _id: res.userId
   })
-  console.log('🐤 ≂ userInfo:', userInfo);
   return {
     issueInfo: res,
     userInfo: userInfo

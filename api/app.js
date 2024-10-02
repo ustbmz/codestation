@@ -20,7 +20,7 @@ const userRouter = require("./routes/user");
 
 const typeRouter = require("./routes/type");
 // const interviewRouter = require("./routes/interview");
-// const commentRouter = require("./routes/comment");
+const commentRouter = require("./routes/comment");
 // const uploadRouter = require("./routes/upload");
 
 // 创建服务器实例
@@ -54,7 +54,7 @@ app.use("/api/user", userRouter);
 
 
 app.use("/api/type", typeRouter);
-// app.use("/api/comment", commentRouter);
+app.use("/api/comment", commentRouter);
 // app.use("/api/interview", interviewRouter);
 // app.use("/api/upload", uploadRouter);
 app.use('/api/captcha', captchaRouter)
