@@ -43,7 +43,7 @@ router.get('/whoami', async function (req, res, next) {
   // 1. 从客户端请求头的 Authorization 字段拿到 token，然后进行解析
   const token = analysisToken(req.get('Authorization'))
   console.log('🐤 ≂ whoami req.get:', req.get('Authorization'))
-  console.log('🐤 ≂ whoami token:', token)
+  // console.log('🐤 ≂ whoami token:', token)
   // 查看解析 token 是否成功
   if (token) {
     // 2. 返回给客户端解析结果

@@ -28,8 +28,9 @@ router.get("/getIssue", async function (req, res) {
 /**
  * 根据 id 获取其中一个问答具体信息
  */
-router.get("/:id", async function (req, res) {
+router.get("/getIssue/:id", async function (req, res) {
   const result = await findIssueByIdService(req.params.id);
+  console.log('🐤 ≂ result:', result);
   res.send(formatResponse(0, "", result));
 });
 
@@ -37,9 +38,6 @@ router.get("/:id", async function (req, res) {
  * 新增问答
  */
 router.post("/addIssue", async function (req, res, next) {
-  console.log('🐤 ≂ req:', req);
-  console.log('🐤 ≂ req:', req.body)
-  
   const result = await addIssueService(req.body);
   if (result && result._id) {
     res.send(formatResponse(0, "", result));

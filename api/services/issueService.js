@@ -2,6 +2,8 @@ const { validate } = require('validate.js')
 const { issueRule } = require('./rules')
 const { ValidationError } = require('../utils/errors')
 const issueModel = require('../models/issueModel')
+const userModel = require('../models/userModel')
+
 
 /**
  * 按分页查询问答
@@ -22,9 +24,19 @@ module.exports.findIssueByPageService = async function (parms) {
  * 根据 id 获取其中一个问答信息
  */
 module.exports.findIssueByIdService = async function (id) {
-  return await issueModel.findOne({
+  console.log('🐤 ≂ id:', id);
+  let res =  await issueModel.findOne({
     _id: id,
   })
+  console.log('🐤 ≂ res:', res);
+  let userInfo = await userModel.findOne({
+    _id: res.userId
+  })
+  console.log('🐤 ≂ userInfo:', userInfo);
+  return {
+    issueInfo: res,
+    userInfo: userInfo
+  }
 }
 
 /**
