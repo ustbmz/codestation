@@ -47,3 +47,11 @@ export function getInfoWithToken() {
   })
 }
 
+
+export function getPointsrank(params) {
+  return request({
+    url: `/user/pointsrank`,
+    method: 'GET',
+    params: params,
+  })
+}

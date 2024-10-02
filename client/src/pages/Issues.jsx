@@ -4,7 +4,10 @@ import styles from '../css/Issue.module.css'
 import { useEffect, useState } from 'react'
 import { getIssues } from '../api/issues'
 import IssueItem from '../components/IssueItem'
-import { Pagination } from 'antd'
+import Recommend from '../components/Recommend'
+import ScoreRank from '../components/ScoreRank'
+
+import { Pagination, Button } from 'antd'
 function Issues(props) {
   const [issues, setIssues] = useState([])
   // 页码
@@ -55,10 +58,12 @@ function Issues(props) {
     }
   }
 
+  const addIssueHandle = () => {}
+
   return (
     <div className={styles.container}>
       <PageHeader title="问答列表" />
-      <div className={styles.issuesContainer}>
+      <div className={styles.issueContainer}>
         <div className={styles.leftSide}>
           {IssueItemList}
           <div className="paginationContainer">
@@ -72,7 +77,21 @@ function Issues(props) {
             />
           </div>
         </div>
-        <div className={styles.rightSide}></div>
+        <div className={styles.rightSide}>
+          <Button
+            type="primary"
+            size="large"
+            style={{
+              marginBottom: '30px',
+              width: '100%',
+            }}
+            onClick={addIssueHandle}
+          >
+            我要提问
+          </Button>
+          <Recommend/>
+          <ScoreRank/>
+        </div>
       </div>
     </div>
   )

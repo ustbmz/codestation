@@ -25,12 +25,16 @@
     /* outline: 1px solid red; */
 }
 
+.nickName{
+    flex: 1;
+}
+
 .avatar{
     margin:0 15px;
 }
 
 .right {
-    width: 20%;
+    width: 24%;
     height: 100%;
     display: flex;
     justify-content: center;

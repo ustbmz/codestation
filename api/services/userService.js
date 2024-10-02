@@ -6,7 +6,6 @@ const { ValidationError } = require('../utils/errors')
 const { randomAvatar } = require('../utils/tools')
 const userModel = require('../models/userModel')
 
-
 /**
  *
  * @param {*} loginId 用户的登录账号
@@ -28,13 +27,26 @@ module.exports.userIsExistService = async function (loginId) {
  */
 module.exports.findUserByIdService = async function (id) {
   // return await findUserById(id)
-  return userModel.findOne({
+  return await userModel.findOne({
     _id: id,
   })
 }
 
+module.exports.findUserByLoginId = async function (loginId) {
+  return await userModel.findOne({loginId})
+}
+
+module.exports.findUsersService = async function () {
+  console.log('🐤 ≂ findUsersService:')
+  return await userModel.find({})
+}
+
 module.exports.addUserService = async function (data) {
   return await userModel.create(userInfo)
+}
+
+module.exports.findUserByPointsRankService = async function () {
+  return await userModel.find().sort({ points: -1, registerDate: -1 }).limit(10)
 }
 
 module.exports.loginService = async function (userInfo) {
@@ -64,7 +76,7 @@ module.exports.loginService = async function (userInfo) {
         code: 0,
         msg: '登录成功',
         data: user[0],
-        token
+        token,
       }
     }
   }

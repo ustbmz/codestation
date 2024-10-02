@@ -9,13 +9,9 @@ const router = express.Router()
 const {
   loginService,
   addUserService,
-  deleteUserService,
-  updateUserService,
-  findUserByPageService,
   findUserByIdService,
   userIsExistService,
-  passwordcheckService,
-  findUserByPointsRankService,
+  findUserByPointsRankService
 } = require('../services/userService')
 
 const { formatResponse, analysisToken } = require('../utils/tools')
@@ -106,10 +102,10 @@ router.post('/addUser', async function (req, res, next) {
 /**
  * 根据 id 删除用户
  */
-// router.delete('/:id', async function (req, res) {
-//   const result = await deleteUserService(req.params.id)
-//   res.send(formatResponse(0, '', result))
-// })
+router.delete('/:id', async function (req, res) {
+  const result = await deleteUserService(req.params.id)
+  res.send(formatResponse(0, '', result))
+})
 
 /**
  * 根据 id 查找用户

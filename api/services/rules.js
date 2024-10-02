@@ -1,6 +1,6 @@
 const { validate } = require("validate.js");
 // const { findAdminByLoginId } = require("../dao/adminDao");
-const { findUserByLoginId } = require("../api/userControl");
+const { findUserByLoginId } = require('../services/userService')
 // const { findTypeByTypeName } = require("../dao/typeDao");
 
 /**
@@ -59,7 +59,7 @@ exports.userRule = {
  * @returns
  */
 validate.validators.userLoginIdIsExist = async function (loginId) {
-  const userInfo = await findUserByLoginId(loginId);
+  const userInfo = await findUserByLoginId(loginId)
   if (userInfo.length) {
     return "loginId is already exist";
   }
