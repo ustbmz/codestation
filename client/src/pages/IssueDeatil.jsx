@@ -6,7 +6,6 @@ import PageHeader from '../components/PageHeader'
 import Recommend from '../components/Recommend'
 import ScoreRank from '../components/ScoreRank'
 import Discuss from '../components/Discuss'
-
 import { formatDate } from '../utils/index'
 
 function IssueDeatil(props) {
@@ -23,11 +22,6 @@ function IssueDeatil(props) {
     fetchData()
   }, [id])
 
-  const handleCommentSubmit = (comment) => {
-    console.log('Submitted comment:', comment);
-    // 这里添加提交评论的逻辑
-  };
-
   return (
     <div className={styles.container}>
       <PageHeader title="问答详情" />
@@ -40,12 +34,15 @@ function IssueDeatil(props) {
               <span>发布于:{formatDate(issueInfo.issueDate)}</span>
             </div>
             <div className={styles.content}>
-              <div dangerouslySetInnerHTML={{ __html: issueInfo.issueContent }}></div>
+              <div
+                dangerouslySetInnerHTML={{ __html: issueInfo.issueContent }}
+              ></div>
             </div>
           </div>
-          
+
           <div className={styles.discussSection}>
-            <Discuss onSubmit={handleCommentSubmit} />
+            {issueInfo?<Discuss commentType={1} targetId={issueInfo?._id} />:null}
+            {/* <Discuss commentType={1} targetId={issueInfo?._id} /> */}
           </div>
         </div>
         <div className={styles.rightSide}>

@@ -1,50 +1,83 @@
-import React, { useRef } from 'react';
-import { useSelector } from 'react-redux';
-import { Avatar } from 'antd';
-import styles from '../css/Discuss.module.css';
-import { Editor } from '@toast-ui/react-editor';
-import '@toast-ui/editor/dist/toastui-editor.css';
+import React, { useEffect, useRef, useState } from 'react'
+import { useSelector } from 'react-redux'
+import { Avatar, Comment, Form, Button, List, Tooltip } from 'antd'
+import { Editor } from '@toast-ui/react-editor'
+import { getIssueComment } from '../api/comment'
+import { formatDate} from '../utils'
 
-function Discuss({ onSubmit }) {
-    const editorRef = useRef(null);
-    const userInfo = useSelector(state => state.user);
+function Discuss(props) {
+  console.log('🐤 ≂ props:', props)
+  const { userInfo, isLogin } = useSelector((state) => state.user)
+  const [commenList, setCommentList] = useState([])
+  const editorRef = useRef()
+  let avatar = null
+  if (isLogin) {
+    avatar = <Avatar src={userInfo.avatar} />
+  } else {
+    avatar = (
+      <Avatar src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWUem1ykMgZrm7P2GNRhID1fnipTWf1kQ1dA&s" />
+    )
+  }
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        const editorInstance = editorRef.current.getInstance();
-        const comment = editorInstance.getMarkdown();
-        if (comment.trim()) {
-            onSubmit(comment);
-            editorInstance.setMarkdown('');
+  useEffect(() => {
+    async function fetchData() {
+      if (props.targetId) {
+        const { data } = await getIssueComment(props.targetId)
+        console.log('🐤 getIssueComment ≂ result:', data)
+        setCommentList(data)
+      }
+    }
+    fetchData()
+  }, [props.targetId])
+
+  return (
+    <div>
+      <Comment
+        avatar={avatar}
+        content={
+          <>
+            <Form.Item>
+              <Editor
+                initialValue=""
+                previewStyle="vertical"
+                height="300px"
+                initialEditType="wysiwyg"
+                language={'zh-CN'}
+                useCommandShortcut={true}
+                ref={editorRef}
+              />
+            </Form.Item>
+            <Form.Item>
+              <Button disabled={isLogin ? false : true} type="primary">
+                提交评论
+              </Button>
+            </Form.Item>
+          </>
         }
-    };
-
-    return (
-        <div className={styles.discussContainer}>
-            <div className={styles.userInfoContainer}>
-                <Avatar
-                    src={userInfo.avatar}
-                    alt={userInfo.nickname}
-                    size="small"
-                    className={styles.avatar}
-                />
-                <span className={styles.username}>{userInfo.nickname}</span>
-            </div>
-            <form onSubmit={handleSubmit} className={styles.formContainer}>
-                <Editor
-                    ref={editorRef}
-                    initialValue=""
-                    previewStyle="vertical"
-                    height="200px"
-                    initialEditType="markdown"
-                    useCommandShortcut={true}
-                />
-                <button type="submit" className={styles.submitButton}>
-                    添加评论
-                </button>
-            </form>
-        </div>
-    );
+      ></Comment>
+      {commenList.length > 0 && (
+        <List
+          header="当前评论"
+          dataSource={commenList}
+          renderItem={(item) => (
+            <Comment
+              avatar={avatar}
+              content={
+                <div
+                  dangerouslySetInnerHTML={{ __html: item.commentContent }}
+                ></div>
+              }
+              datetime={
+                <Tooltip title={formatDate(item.commentDate)}>
+                  <span>{formatDate(item.commentDate)}</span>
+                </Tooltip>
+              }
+            />
+          )}
+        ></List>
+      )}
+    </div>
+  )
 }
 
-export default Discuss;
+export default Discuss

@@ -30,7 +30,6 @@ function Issues(props) {
         pageSize: pageInfo.pageSize,
         issueStatus: true,
       })
-      console.log('🐤 ≂ data:', data)
       setIssues(data.data)
       setTotal(data.total)
     }
