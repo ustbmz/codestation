@@ -5,9 +5,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getTypeList } from '../redux/typeSlice'
 import { Tag } from 'antd'
 import { getUserById } from '../api/user'
+import { useNavigate } from 'react-router-dom'
 function IssueItem(props) {
   const [userInfo, setUserIfno] = useState({})
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const typeList = useSelector((state) => state.type.typeList)
   const colorArr = [
     'magenta',
@@ -37,6 +39,10 @@ function IssueItem(props) {
 
   const type = typeList?.find((item) => item._id === props.issueInfo.typeId)
 
+  const hanldClick = (id) => {
+    navigate(`/issues/${id}`)
+  }
+
   return (
     <div className={styles.container}>
       <div className={styles.issueNum}>
@@ -50,7 +56,9 @@ function IssueItem(props) {
         <div>浏览</div>
       </div>
       <div className={styles.issueContainer}>
-        <div className={styles.top}>{props.issueInfo.issueTitle}</div>
+        <div className={styles.top} onClick={()=>{
+          hanldClick(props.issueInfo._id)
+        }}>{props.issueInfo.issueTitle}</div>
         <div className={styles.bottom}>
           <div className={styles.left}>
             {/* <Tag>{type.typeName}</Tag> */}

@@ -43,7 +43,6 @@
 .question {
     width: 100%;
     padding: 20px;
-    box-shadow: 0 0 1px #ccc;
     border-radius: 10px;
     margin-bottom: 30px;
 }
@@ -70,10 +69,29 @@
     font-size: 16px;
 }
 
+.content img{
+    max-width: 100%;
+}
+
 .rightSide {
     width: 28%;
     height: 100%;
     /* outline: 1px solid #ccc; */
     position: sticky;
     top: 90px;
+}
+
+/* 新增加的类，用于问题内容区域 */
+.questionContent {
+    box-shadow: 0 0 1px #ccc;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+}
+
+.discussWrapper {
+    display: flex;
+    padding: 15px;
+    border: 1px solid #e1e1e1;
+    border-radius: 5px;
 }

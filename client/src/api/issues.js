@@ -7,6 +7,13 @@ export function getIssues(params) {
   })
 }
 
+export function getIssueById(id) {
+  return request({
+    url: `/issue/getIssue/${id}`,
+    method: 'GET',
+  })
+}
+
 export function addIssue(params) {
   return request({
     url: `/issue/addIssue`,
