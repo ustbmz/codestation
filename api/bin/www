@@ -87,5 +87,5 @@ function onListening() {
     ? 'pipe ' + addr
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
-  console.log("服务器端已启动，监听 7001 端口...");
+  console.log("Server is Start on 7001 Port");
 }

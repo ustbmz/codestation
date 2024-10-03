@@ -12,7 +12,9 @@ function Discuss(props) {
   const editorRef = useRef()
   let avatar = null
   if (isLogin) {
-    avatar = <Avatar src={userInfo.avatar} />
+    avatar = (
+      <Avatar src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTN8c2Ssyje5l-n4AYBloG2sjM-v3Rf8vmzVA&s" />
+    )
   } else {
     avatar = (
       <Avatar src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWUem1ykMgZrm7P2GNRhID1fnipTWf1kQ1dA&s" />
@@ -24,7 +26,7 @@ function Discuss(props) {
       if (props.targetId) {
         const { data } = await getIssueComment(props.targetId)
         console.log('🐤 getIssueComment ≂ result:', data)
-        setCommentList(data)
+        setCommentList(data?data:[])
       }
     }
     fetchData()
@@ -62,6 +64,7 @@ function Discuss(props) {
           renderItem={(item) => (
             <Comment
               avatar={avatar}
+              author={item.userInfo.nickname}
               content={
                 <div
                   dangerouslySetInnerHTML={{ __html: item.commentContent }}
