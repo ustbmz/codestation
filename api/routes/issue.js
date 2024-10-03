@@ -30,7 +30,6 @@ router.get("/getIssue", async function (req, res) {
  */
 router.get("/getIssue/:id", async function (req, res) {
   const result = await findIssueByIdService(req.params.id);
-  console.log('🐤 ≂ result:', result);
   res.send(formatResponse(0, "", result));
 });
 

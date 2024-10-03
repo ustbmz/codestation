@@ -3,7 +3,7 @@
  */
 
 // 首先连接数据库
-require("./connect");
+require("./DBHelper");
 
 // 引入数据模型
 const adminModel = require("../models/adminModel");
