@@ -1,14 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
-import { Avatar, Comment, Form, Button, List, Tooltip } from 'antd'
+import { Avatar, Comment, Form, Button, List, Tooltip, message } from 'antd'
 import { Editor } from '@toast-ui/react-editor'
-import { getIssueComment } from '../api/comment'
-import { formatDate} from '../utils'
+import { getIssueComment, addComment } from '../api/comment'
+import { formatDate } from '../utils'
+import { useNavigate } from 'react-router-dom'
 
 function Discuss(props) {
   console.log('🐤 ≂ props:', props)
   const { userInfo, isLogin } = useSelector((state) => state.user)
   const [commenList, setCommentList] = useState([])
+  const navigate = useNavigate()
   const editorRef = useRef()
   let avatar = null
   if (isLogin) {
@@ -32,6 +34,27 @@ function Discuss(props) {
     fetchData()
   }, [props.targetId])
 
+  const submitComment = async () => {
+    const content = editorRef.current.getInstance().getHTML()
+    console.log('🐤 ≂ content:', content);
+    if (content) {
+      let comment = {
+        userId: userInfo._id,
+        issueId: props.targetId,
+        commentContent: content,
+        commentType: props.commentType,
+        typeId: props.typeId,
+      }
+      console.log('🐤 ≂ comment:', comment)
+      
+      let result = await addComment(comment)
+      console.log('🐤 ≂ result:', result);
+      if (result) {
+        message.success('评论成功,')
+      }
+    }
+  }
+
   return (
     <div>
       <Comment
@@ -50,7 +73,7 @@ function Discuss(props) {
               />
             </Form.Item>
             <Form.Item>
-              <Button disabled={isLogin ? false : true} type="primary">
+              <Button disabled={isLogin ? false : true} type="primary" onClick={submitComment}>
                 提交评论
               </Button>
             </Form.Item>

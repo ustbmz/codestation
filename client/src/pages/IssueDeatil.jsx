@@ -41,7 +41,7 @@ function IssueDeatil(props) {
           </div>
 
           <div className={styles.discussSection}>
-            {issueInfo?<Discuss commentType={1} targetId={issueInfo?._id} />:null}
+            {issueInfo?<Discuss commentType={1} targetId={issueInfo?._id} typeId={issueInfo?.typeId} />:null}
             {/* <Discuss commentType={1} targetId={issueInfo?._id} /> */}
           </div>
         </div>

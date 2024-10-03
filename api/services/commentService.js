@@ -2,10 +2,10 @@
  * 评论对应二级路由
  */
 
-
 const commentModel = require('../models/commentModel')
 const mongoose = require('mongoose')
-
+const { validate } = require('validate.js')
+const { commentRule } = require('./rules')
 
 /**
  * 通过 issueId 返回所有相关评论附带用户信息
@@ -26,8 +26,6 @@ module.exports.findIssueCommentByIdService = async function (id, pager) {
   return result
 }
 
-
-
 // /**
 //  * 按照分页获取书籍模块某一本书对应的评论
 //  */
@@ -42,26 +40,10 @@ module.exports.findIssueCommentByIdService = async function (id, pager) {
 //  * @param {*} newCommentInfo
 //  * @returns
 //  */
-// module.exports.addCommentService = async function (newCommentInfo) {
-//   // 首先对数据进行一个处理，补全另一个 id 值为 null
-//   if (!newCommentInfo.issueId) {
-//     newCommentInfo.issueId = ''
-//   } else {
-//     newCommentInfo.bookId = ''
-//   }
-
-//   return validate.async(newCommentInfo, commentRule).then(
-//     async function () {
-//       // 增加评论日期字段
-//       newCommentInfo.commentDate = new Date().getTime().toString()
-//       return await addCommentDao(newCommentInfo)
-//     },
-//     function (e) {
-//       console.log(e)
-//       return new ValidationError('数据验证失败')
-//     }
-//   )
-// }
+module.exports.addCommentService = async function (newCommentInfo) {
+  console.log('🐤 ≂ newCommentInfo:', newCommentInfo)
+  return await commentModel.create(newCommentInfo)
+}
 
 // /**
 //  * 根据 id 删除评论

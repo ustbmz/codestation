@@ -25,6 +25,7 @@
     "validate.js": "^0.13.1"
   },
   "devDependencies": {
+    "dayjs": "^1.11.13",
     "md5": "^2.3.0"
   }
 }

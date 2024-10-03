@@ -50,16 +50,18 @@ module.exports.findUserByPointsRankService = async function () {
 
 module.exports.loginService = async function (userInfo) {
   const { loginId, loginPwd } = userInfo
-  const user = await userModel.find({ loginId })
-  console.log('🐤 ≂ user:', user)
-  if (!user.length) {
+  const result = await userModel.find({ loginId })
+  console.log('🐤 ≂ user:', result)
+  const user = result[0]
+  console.log('🐤 ≂ userInfo:', user)
+  if (!result.length) {
     return {
       code: 400,
       msg: '用户不存在',
     }
   } else {
     const pwd = md5(loginPwd)
-    if (pwd !== user[0].loginPwd) {
+    if (pwd !== user.loginPwd) {
       return {
         code: 400,
         msg: '密码错误',
@@ -67,13 +69,13 @@ module.exports.loginService = async function (userInfo) {
     } else {
       // const token = jwt.sign()
       const loginPeriod = 7
-      const token = jwt.sign(user[0], md5('coderstation'), {
+      const token = jwt.sign(user, md5('coderstation'), {
         expiresIn: 60 * 60 * 24 * loginPeriod,
       })
       return {
         code: 0,
         msg: '登录成功',
-        data: user[0],
+        data: user,
         token,
       }
     }

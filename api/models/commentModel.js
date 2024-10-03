@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const moment = require('dayjs')
 
 // 定义对应的 Schema
 const commentSchema = new mongoose.Schema(
@@ -12,10 +13,6 @@ const commentSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'issueModel', // 关联的模型
     }, //  所属分类
-    bookId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'bookModel', // 关联的模型
-    }, //  所属分类
     typeId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'typeModel', // 关联的模型
@@ -28,6 +25,11 @@ const commentSchema = new mongoose.Schema(
     versionKey: false,
   }
 )
+
+commentSchema.pre('save', function (next) {
+  this.commentDate = moment().format('YYYY-MM-DD HH:mm:ss')
+  next()
+})
 
 commentSchema.statics = {
   findIssueCommentById: function (id) {
