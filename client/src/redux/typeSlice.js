@@ -13,11 +13,16 @@ export const TypeSlice = createSlice({
   name: 'type',
   initialState: {
     typeList: [],
+    issueTypeId: 'all',
+    bookTypeId: 'all',
   },
   reducers: {
-    // 初始化类型列表
-    initTypeList: (state, { payload }) => {
-      state.typeList = payload
+    // // 初始化类型列表
+    // initTypeList: (state, { payload }) => {
+    //   state.typeList = payload
+    // },
+    updateIssueTypeId: (state, { payload }) => {
+      state.issueTypeId = payload
     },
   },
   extraReducers: (builder) => {
@@ -27,4 +32,5 @@ export const TypeSlice = createSlice({
   },
 })
 
+export const { updateIssueTypeId } = TypeSlice.actions
 export default TypeSlice.reducer
