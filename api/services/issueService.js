@@ -3,16 +3,32 @@ const { issueRule } = require('./rules')
 const { ValidationError } = require('../utils/errors')
 const issueModel = require('../models/issueModel')
 const userModel = require('../models/userModel')
-
+const { param } = require('../routes/issue')
 
 /**
  * 按分页查询问答
  */
 module.exports.findIssueByPageService = async function (parms) {
-  const { page, pageSize } = parms
+  console.log('🐤 ≂ parms:', parms)
+  const { page, pageSize, typeId, issueStatus } = parms
   const skip = (page - 1) * pageSize
-  const Totaldata = await issueModel.countDocuments()
-  const data = await issueModel.find().skip(skip).limit(pageSize)
+  let Totaldata =0
+  let data = []
+  if (typeId) {
+    data = await issueModel
+      .find({
+        typeId: typeId,
+      })
+      .skip(skip)
+      .limit(pageSize)
+    
+    Totaldata = await issueModel.countDocuments({
+      typeId: typeId,
+    })
+  } else {
+    data = await issueModel.find().skip(skip).limit(pageSize)
+    Totaldata = await issueModel.countDocuments()
+  }
   return {
     currentPage: page,
     total: Totaldata,
@@ -24,16 +40,16 @@ module.exports.findIssueByPageService = async function (parms) {
  * 根据 id 获取其中一个问答信息
  */
 module.exports.findIssueByIdService = async function (id) {
-  console.log('🐤 ≂ id:', id);
-  let res =  await issueModel.findOne({
+  console.log('🐤 ≂ id:', id)
+  let res = await issueModel.findOne({
     _id: id,
   })
   let userInfo = await userModel.findOne({
-    _id: res.userId
+    _id: res.userId,
   })
   return {
     issueInfo: res,
-    userInfo: userInfo
+    userInfo: userInfo,
   }
 }
 
