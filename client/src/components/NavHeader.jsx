@@ -2,8 +2,17 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { Input, Select } from 'antd'
 import LoginAvatar from '../components/LoginAvatar'
-
+import { useNavigate } from 'react-router-dom'
 function PageHeader(props) {
+  const navigate = useNavigate()
+  const searchFn = (partialName) => {
+    if (partialName) {
+      navigate(`/searchPage`, {
+        state: { partialName },
+      })
+    }
+     
+  }
   return (
     <div className="headerContainer">
       {/* 头部 logo */}
@@ -45,6 +54,7 @@ function PageHeader(props) {
             style={{
               width: '80%',
             }}
+            onSearch={searchFn}
           />
         </Input.Group>
       </div>

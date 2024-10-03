@@ -6,6 +6,7 @@ import IssueDeatil from '../pages/IssueDeatil'
 import Books from '../pages/Books';
 import Interviews from '../pages/Interviews';
 import AddIssuePage from '../pages/AddIssue'
+import SearchPage from '../pages/SearchPage'
 
 
 function RouteConfig() {
@@ -16,6 +17,7 @@ function RouteConfig() {
         <Route path="/books" element={<Books />} />
         <Route path="/interviews" element={<Interviews />} />
         <Route path="/addIssue" element={<AddIssuePage />} />
+        <Route path="/searchPage" element={<SearchPage />} />
         <Route path="/" element={<Navigate replace to="/issues" />} />
       </Routes>
     )
