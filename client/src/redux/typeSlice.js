@@ -17,10 +17,6 @@ export const TypeSlice = createSlice({
     bookTypeId: 'all',
   },
   reducers: {
-    // // 初始化类型列表
-    // initTypeList: (state, { payload }) => {
-    //   state.typeList = payload
-    // },
     updateIssueTypeId: (state, { payload }) => {
       state.issueTypeId = payload
     },
