@@ -27,10 +27,10 @@ router.get("/", async function (req, res) {
 /**
  * 获取所有分类的面试题标题
  */
-router.get("/interviewTitle", async function (req, res) {
-  const result = await findInterviewTitleByTypeService();
-  res.send(formatResponse(0, "", result));
-});
+router.get('/geInterViewTitle', async function (req, res) {
+  const result = await findInterviewTitleByTypeService()
+  res.send(formatResponse(0, '', result))
+})
 
 
 
@@ -38,10 +38,10 @@ router.get("/interviewTitle", async function (req, res) {
 /**
  * 根据 id 获取面试题
  */
-router.get("/:id", async function (req, res) {
-  const result = await findInterviewByIdService(req.params.id);
-  res.send(formatResponse(0, "", result));
-});
+router.get('/getInterview/:id', async function (req, res) {
+  const result = await findInterviewByIdService(req.params.id)
+  res.send(formatResponse(0, '', result))
+})
 
 /**
  * 新增面试题
