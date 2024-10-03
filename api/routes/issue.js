@@ -8,7 +8,7 @@ const router = express.Router();
 // 引入业务层方法
 const {
   addIssueService,
-  findIssueByPageService,
+  findIssueAllService,
   findIssueByIdService,
   updateIssueService,
   deleteIssueService,
@@ -21,7 +21,7 @@ const { formatResponse } = require("../utils/tools");
  * 根据分页获取问答信息
  */
 router.get("/getIssue", async function (req, res) {
-  const result = await findIssueByPageService(req.query)
+  const result = await findIssueAllService(req.query)
   res.send(formatResponse(0, "", result));
 });
 

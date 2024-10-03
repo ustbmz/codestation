@@ -8,25 +8,34 @@ const { param } = require('../routes/issue')
 /**
  * 按分页查询问答
  */
-module.exports.findIssueByPageService = async function (parms) {
-  console.log('🐤 ≂ parms:', parms)
-  const { page, pageSize, typeId, issueStatus } = parms
+module.exports.findIssueAllService = async function (params) {
+  console.log('🐤 ≂ params:', params)
+  const { page, pageSize, typeId, partialName } = params
   const skip = (page - 1) * pageSize
-  let Totaldata =0
+  let Totaldata = 0
   let data = []
   if (typeId) {
     data = await issueModel
       .find({
         typeId: typeId,
+        issueStatus: true,
       })
       .skip(skip)
       .limit(pageSize)
-    
+
     Totaldata = await issueModel.countDocuments({
       typeId: typeId,
     })
+  } else if (partialName) {
+    data = await issueModel.findUsersByPartialName(params)
+    Totaldata = data.length
   } else {
-    data = await issueModel.find().skip(skip).limit(pageSize)
+    data = await issueModel
+      .find({
+        issueStatus: true,
+      })
+      .skip(skip)
+      .limit(pageSize)
     Totaldata = await issueModel.countDocuments()
   }
   return {
