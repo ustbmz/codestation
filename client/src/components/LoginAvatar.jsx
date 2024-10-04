@@ -54,8 +54,12 @@ function LoginAvatar(props) {
     } else {
         // 没有登录
         loginStatus = (
-            <Button type="primary" size="large" onClick={props.loginHandle}>注册/登录</Button>
-        );
+            <Button type="primary" size="large" style={{
+              borderRadius: '4px',
+          }} onClick={props.loginHandle}>
+            注册登录
+          </Button>
+        )
     }
 
     return (

@@ -2,7 +2,7 @@
     display:flex;
     height: 100px;
     align-items: center;
-    background: linear-gradient(rgb(238, 237, 237),white);
+    background: #fff;
 }
 
 .pageHeader {

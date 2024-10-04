@@ -74,11 +74,14 @@
   width: 1200px;
   /* height: 5000px; */
   background-color: #fff;
-  margin: 85px auto 0 auto;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  margin: 85px auto 25px auto;
+  
 }
 
 .footer {
   width: 100vw;
+  background-color: #041527;
   /* outline: 1px solid red; */
 }
 
