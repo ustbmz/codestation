@@ -4,7 +4,7 @@ import NavHeader from './components/NavHeader'
 import PageFooter from './components/PageFooter'
 import './css/App.css'
 
-import RouterConfig from './router/index.jsx'
+import RouteBefore from './router/RouteBefore.jsx'
 import LoginForm from './components/LoginForm'
 import { getInfoWithToken, getUserById } from './api/user'
 import { useDispatch } from 'react-redux'
@@ -42,7 +42,7 @@ function App() {
       </Header>
       {/* 匹配上的路由页面 */}
       <Content className="content">
-        <RouterConfig />
+        <RouteBefore />
       </Content>
       {/* 底部 */}
       <Footer className="footer">
