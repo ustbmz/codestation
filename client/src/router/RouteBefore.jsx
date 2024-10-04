@@ -1,34 +1,35 @@
-import { message } from 'antd'
-import RouteConfig from './index.jsx'
-import RouteBeforeConfig from './RouteBeforeConfig.js'
-import { useLocation } from 'react-router-dom'
+import React from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { Button, Result } from 'antd';
+import RouteConfig from './index.jsx';
+import RouteBeforeConfig from './RouteBeforeConfig.js';
+
 function RouteBefore() {
-  const location = useLocation()
+  const location = useLocation();
+  const navigate = useNavigate();
 
-  console.log(location.pathname, 'RouteBefore')
-  const currentPath = RouteBeforeConfig.filter(
+  console.log(location.pathname, 'RouteBefore');
+  const currentPath = RouteBeforeConfig.find(
     (item) => item.path === location.pathname
-  )[0]
-  console.log('🐤 ≂ currentPath:', currentPath)
+  );
+  console.log('🐤 ≂ currentPath:', currentPath);
 
-  if (currentPath) {
-    if (currentPath.needLogin && !localStorage.getItem('userToken')) {
-      message.error('请先登录')
-      // location.pathname = '/'
-    }
+  if (currentPath && currentPath.needLogin && !localStorage.getItem('userToken')) {
+    return (
+      <Result
+        status="403"
+        title="需要登录"
+        subTitle="您需要登录才能访问此页面"
+        extra={
+          <Button type="primary" onClick={() => navigate('/')}>
+            返回首页
+          </Button>
+        }
+      />
+    );
   }
-  // const currentPath = RouteBeforeConfig.filter(
-  //   (item) => item.path === location.pathname
-  // )[0]
-  // console.log('🐤 ≂ currentPath:', currentPath)
-  // if (currentPath.needLogin) {
-  //   const isLogin = localStorage.getItem('userToken')
-  //   console.log('🐤 ≂ isLogin:', isLogin)
-  //   if (!isLogin) {
-  //     navigate('/')
-  //   }
-  // }
-  return <RouteConfig />
+
+  return <RouteConfig />;
 }
 
-export default RouteBefore
+export default RouteBefore;

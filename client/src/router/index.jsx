@@ -7,7 +7,7 @@ import Books from '../pages/Books';
 import Interviews from '../pages/Interviews';
 import AddIssuePage from '../pages/AddIssue'
 import SearchPage from '../pages/SearchPage'
-
+import NotFound from '../components/NotFound'; // 引入 NotFound 组件
 
 function RouteConfig() {
     return (
@@ -19,6 +19,7 @@ function RouteConfig() {
         <Route path="/addIssue" element={<AddIssuePage />} />
         <Route path="/searchPage" element={<SearchPage />} />
         <Route path="/" element={<Navigate replace to="/issues" />} />
+        <Route path="*" element={<NotFound />} /> {/* 添加 NotFound 路由 */}
       </Routes>
     )
 }
