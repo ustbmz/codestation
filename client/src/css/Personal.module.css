@@ -15,3 +15,113 @@
     color: #4091f7;
     cursor: pointer;
 }
+
+.personalContainer {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+.avatarContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.avatarContainer h2 {
+    margin-top: 16px;
+    margin-bottom: 16px;
+}
+
+.infoLabel {
+    display: flex;
+    align-items: center;
+}
+
+.infoLabel svg {
+    margin-right: 8px;
+}
+
+.avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.infoGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+.infoItem {
+    background-color: #ffffff;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.label {
+    font-weight: bold;
+    color: #333;
+}
+
+.value {
+    color: #666;
+}
+
+.introContainer {
+    margin-top: 40px;
+    padding-left: 0;
+}
+
+.introContainer h3 {
+    margin-bottom: 10px;
+}
+
+.introContent {
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+    padding: 20px;
+    background-color: #fff;
+    line-height: 1.6;
+}
+
+.userInfoContainer {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.userInfoHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+@media (max-width: 768px) {
+    .personalCard {
+        padding: 20px;
+    }
+
+    .avatarContainer {
+        margin-bottom: 30px;
+    }
+
+    .userInfoContainer {
+        margin-top: 20px;
+    }
+}
+
+/* 移除所有 :global() 选择器 */
+
+.personalCard {
+    padding: 30px;
+}
+
+.introDivider {
+    margin: 16px 0;
+    border-top: 1px solid #f0f0f0;
+}
