@@ -1,4 +1,3 @@
-
 .interviewContainer{
     /* outline:1px solid red; */
     display: flex;
@@ -68,4 +67,12 @@
 .content{
     font-weight: 200;
     font-size: 16px;
+}
+
+.emptyContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height:40%;
+    width: 80%;
 }
