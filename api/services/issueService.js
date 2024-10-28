@@ -53,6 +53,7 @@ module.exports.findIssueByIdService = async function (id) {
   let res = await issueModel.findOne({
     _id: id,
   })
+  console.log('🦊 > file: issueService.js:56 > res:', res);
   let userInfo = await userModel.findOne({
     _id: res.userId,
   })

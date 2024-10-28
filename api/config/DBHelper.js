@@ -5,14 +5,16 @@
 const mongoose = require('mongoose')
 
 // 定义链接数据库字符串
-const dbURI = 'mongodb://' + process.env.DB_HOST + '/' + process.env.DB_NAME
+const dbURI =
+  'mongodb://admin:admin123@127.0.0.1:27017/codestation'
 
 mongoose.connect(dbURI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
+  // useNewUrlParser: true,
+  // useUnifiedTopology: true,
 })
 
 mongoose.connection.on('connected', () => {
+  console.log('🦊 > file: DBHelper.js:16 > mongoose.connection.on > connection:');
   console.log('mongoose String at :' + dbURI)
 })
 
