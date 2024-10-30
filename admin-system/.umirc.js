@@ -6,6 +6,7 @@ export default defineConfig({
   model: {},
   initialState: {},
   request: {},
+  dva: {},
   layout: {
     title: 'code station',
   },
@@ -27,7 +28,7 @@ export default defineConfig({
       routes: [
         {
           name: '管理员列表',
-          path: 'adminlist',
+          path: 'adminList',
           component: './Admin',
         },
         {
@@ -44,12 +45,12 @@ export default defineConfig({
       routes: [
         {
           name: '用户列表',
-          path: 'adminlist',
+          path: 'userList',
           component: './User',
         },
         {
           name: '添加用户',
-          path: 'addAdmin',
+          path: 'addUser',
           component: './User/addUser',
         },
       ],
@@ -90,5 +91,11 @@ export default defineConfig({
     //   component: './Table',
     // },
   ],
+  proxy: {
+    '/api': {
+      target: 'http://127.0.0.1:7001',
+      changeOrigin: true,
+    },
+  },
   npmClient: 'npm',
 });
