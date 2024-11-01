@@ -1,6 +1,6 @@
-const md5 = require("md5");
-const jwt = require("jsonwebtoken");
-const { validate } = require("validate.js");
+const md5 = require('md5')
+const jwt = require('jsonwebtoken')
+const { validate } = require('validate.js')
 // const {
 //   loginDao,
 //   addAdminDao,
@@ -9,19 +9,18 @@ const { validate } = require("validate.js");
 //   updateAdminDao,
 //   findAdminByLoginId
 // } = require("../dao/adminDao");
-const { adminRule } = require("./rules");
-const { ValidationError } = require("../utils/errors");
-const { randomAvatar } = require("../utils/tools");
+const { adminRule } = require('./rules')
+const { ValidationError } = require('../utils/errors')
+const { randomAvatar } = require('../utils/tools')
 const adminModal = require('../models/adminModel')
-
 
 /**
  * 查询所有的管理员的业务逻辑
  * @returns 返回查询结果
  */
 module.exports.findAllAdminService = async function () {
-  return await adminModal.find({});
-};
+  return await adminModal.find({})
+}
 
 // /**
 //  * 登录的业务逻辑
@@ -79,48 +78,39 @@ module.exports.findAllAdminService = async function () {
 //  * @param {*} newAdminInfo
 //  * @returns
 //  */
-// module.exports.addAdminService = async function (newAdminInfo) {
-//   // 首先需要进行验证，验证通过后才能添加至数据库
-//   return validate.async(newAdminInfo, adminRule).then(
-//     async function () {
-//       // success
-//       // 说明验证成功
+module.exports.addAdminService = async function (newAdminInfo) {
+  console.log('🦊 > file: adminService.js:83 > newAdminInfo:', newAdminInfo)
+  // 密码如果传递了就使用传递的密码，否则使用默认值
+  if (!newAdminInfo.loginPwd) {
+    // 用户没有填写密码，则使用默认值
+    newAdminInfo.loginPwd = md5(process.env.NEW_ADMIN_PASSWORD)
+  } else {
+    newAdminInfo.loginPwd = md5(newAdminInfo.loginPwd)
+  }
 
-//       // 密码如果传递了就使用传递的密码，否则使用默认值
-//       if (!newAdminInfo.loginPwd) {
-//         // 用户没有填写密码，则使用默认值
-//         newAdminInfo.loginPwd = md5(process.env.NEW_ADMIN_PASSWORD);
-//       } else {
-//         newAdminInfo.loginPwd = md5(newAdminInfo.loginPwd);
-//       }
-
-//       if (!newAdminInfo.avatar) {
-//         // 如果用户没有上传头像，则使用随机头像
-//         newAdminInfo.avatar = await randomAvatar();
-//       }
-//       if (!newAdminInfo.nickname) {
-//         // 如果用户没有书写昵称，则使用默认的管理员昵称
-//         newAdminInfo.nickname = process.env.NEW_ADMIN_NICKNAME;
-//       }
-//       // 默认是可用状态
-//       newAdminInfo.enabled = true;
-
-//       return await addAdminDao(newAdminInfo);
-//     },
-//     function () {
-//       return new ValidationError("数据验证失败");
-//     }
-//   );
-// };
+  if (!newAdminInfo.avatar) {
+    // 如果用户没有上传头像，则使用随机头像
+    newAdminInfo.avatar = ''
+  }
+  if (!newAdminInfo.nickname) {
+    // 如果用户没有书写昵称，则使用默认的管理员昵称
+    newAdminInfo.nickname = process.env.NEW_ADMIN_NICKNAME
+  }
+  // 默认是可用状态
+  newAdminInfo.enabled = true
+  return await adminModal.create(newAdminInfo)
+}
 
 // /**
 //  * 根据 id 删除管理员
 //  * @param {*} id
 //  * @returns
 //  */
-// module.exports.deleteAdminService = async function (id) {
-//   return await deleteAdminDao(id);
-// };
+module.exports.deleteAdminService = async function (id) {
+  return await adminModal.deleteOne({
+    _id: id,
+  })
+}
 
 // /**
 //  * 根据 id 来查找管理员
@@ -137,26 +127,29 @@ module.exports.findAllAdminService = async function () {
 //  * @param {*} newInfo
 //  * @returns
 //  */
-// module.exports.updateAdminService = async function (id, newInfo) {
-//   // 根据 id 获取该管理员原来的信息（主要是为了处理密码）
-//   const adminInfo = await findAdminByIdDao(id);
-//   if (newInfo.loginPwd && newInfo.loginPwd !== adminInfo.loginPwd) {
-//     // 如果传递了密码
-//     // 并且传递过来的的密码和原来的密码不相等，则说明密码变了，需要重新加密
-//     newInfo.loginPwd = md5(newInfo.loginPwd);
-//   }
-//   return await updateAdminDao(id, newInfo);
-// };
+module.exports.updateAdminService = async function (id, newInfo) {
+  // 根据 id 获取该管理员原来的信息（主要是为了处理密码）
+  const adminInfo = await adminModal.findOne({
+    _id: id,
+  })
+  console.log('🦊 > file: adminService.js:149 > adminInfo:', adminInfo)
+  if (newInfo.loginPwd && newInfo.loginPwd !== adminInfo.loginPwd) {
+    // 如果传递了密码
+    // 并且传递过来的的密码和原来的密码不相等，则说明密码变了，需要重新加密
+    newInfo.loginPwd = md5(newInfo.loginPwd)
+  }
+  return await adminModal.updateOne({ _id: id }, newInfo)
+}
 
 // /**
 //  *
 //  * @param {*} loginId 管理员的登录账号
 //  */
-//  module.exports.adminIsExistService = async function (loginId) {
-//   const data = await findAdminByLoginId(loginId);
-//   if (data.length) {
-//     return true;
-//   } else {
-//     return false;
-//   }
-// };
+module.exports.adminIsExistService = async function (loginId) {
+  const data = await adminModal.findOne({ loginId })
+  if (data) {
+    return true
+  } else {
+    return false
+  }
+}

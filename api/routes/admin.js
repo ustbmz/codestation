@@ -5,6 +5,7 @@
 const express = require("express");
 const router = express.Router();
 
+
 // 引入业务层方法
 const {
   loginService,
@@ -76,7 +77,7 @@ router.get("/", async function (req, res) {
 /**
  * 新增管理员
  */
-router.post("/", async function (req, res, next) {
+router.post("/addAdmin", async function (req, res, next) {
   const result = await addAdminService(req.body, next);
   if (result && result._id) {
     res.send(formatResponse(0, "", result));
@@ -88,8 +89,17 @@ router.post("/", async function (req, res, next) {
 /**
  * 根据 id 删除管理员
  */
-router.delete("/:id", async function (req, res) {
-  const result = await deleteAdminService(req.params.id);
+router.post("/delAdmin/:id", async function (req, res) {
+  const result = await deleteAdminService(req.params.id)
+  res.send(formatResponse(0, '', result))
+})
+
+
+/**
+ * 根据 id 修改管理员
+ */
+router.post("/editAdmin", async function (req, res) {
+  const result = await updateAdminService(req.body._id, req.body)
   res.send(formatResponse(0, "", result));
 });
 
@@ -101,13 +111,6 @@ router.get("/:id", async function (req, res) {
   res.send(formatResponse(0, "", result));
 });
 
-/**
- * 根据 id 修改管理员
- */
-router.patch("/:id", async function (req, res) {
-  const result = await updateAdminService(req.params.id, req.body);
-  res.send(formatResponse(0, "", result));
-});
 
 /**
  * 根据 loginId 来查找该管理员是否存在

@@ -12,7 +12,6 @@ exports.adminRule = {
       allowEmpty: false,
     },
     type: "string",
-    adminLoginIdIsExist: true,
   },
   loginPwd: {
     presence: {
@@ -26,7 +25,6 @@ exports.adminRule = {
     },
     type: "number",
   },
-  loginIdIsExist: true,
 };
 
 /**
