@@ -1,4 +1,5 @@
 import { defineConfig } from '@umijs/max';
+import { Children } from 'react';
 
 export default defineConfig({
   antd: {},
@@ -57,21 +58,38 @@ export default defineConfig({
           name: '编辑用户',
           path: 'editUser/:id',
           component: './User/editUser',
-          hideInMenu:true,
+          hideInMenu: true,
         },
       ],
     },
     {
       name: '面试题',
       path: '/interview',
-      component: './InterView',
       icon: 'FileMarkdownOutlined',
+      routes: [
+        {
+          name: '面试题列表',
+          path: 'interviewList',
+          component: './InterView',
+        },
+        {
+          name: '添加面试题',
+          path: 'addInterview',
+          component: './InterView/addInterview',
+        },
+      ],
     },
     {
       name: '问题',
       path: '/issue',
-      component: './Issue',
       icon: 'FormOutlined',
+      routes: [
+        {
+          name: '问题列表',
+          path: 'interviewList',
+          component: './Issue',
+        },
+      ],
     },
     {
       name: '评论',

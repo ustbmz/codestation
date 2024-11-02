@@ -12,7 +12,9 @@ const {
   addInterviewService,
   deleteInterviewService,
   updateInterviewService,
-} = require("../services/interviewService");
+  // 后端系统查询面试题标题
+  findInterViewTitleByPageService,
+} = require('../services/interviewService')
 
 const { formatResponse } = require("../utils/tools");
 
@@ -33,6 +35,16 @@ router.get('/geInterViewTitle', async function (req, res) {
 })
 
 
+/**
+ * 获取所有分类的面试题标题
+ */
+router.post('/geInterViewTitleByPage', async function (req, res) {
+  const result = await findInterViewTitleByPageService(req.body)
+  res.send(result)
+})
+
+
+
 
 
 /**
@@ -46,7 +58,7 @@ router.get('/getInterview/:id', async function (req, res) {
 /**
  * 新增面试题
  */
-router.post("/", async function (req, res, next) {
+router.post("/addInterview", async function (req, res, next) {
   const result = await addInterviewService(req.body);
   if (result && result._id) {
     res.send(formatResponse(0, "", result));
@@ -58,10 +70,10 @@ router.post("/", async function (req, res, next) {
 /**
  * 删除面试题
  */
-router.delete("/:id", async function (req, res) {
-  const result = await deleteInterviewService(req.params.id);
-  res.send(formatResponse(0, "", result));
-});
+router.get('/delInterview/:id', async function (req, res) {
+  const result = await deleteInterviewService(req.params.id)
+  res.send(formatResponse(0, '', result))
+})
 
 /**
  * 修改面试题

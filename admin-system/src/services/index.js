@@ -3,8 +3,10 @@
 
 import * as AdminController from './AdminController';
 import * as UserController from './UserController';
+import * as TypeController from './TypeController';
 
 export default {
   AdminController,
   UserController,
+  TypeController,
 };

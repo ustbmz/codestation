@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-
+const moment = require("dayjs");
 // 定义对应的 Schema
 const interviewSchema = new mongoose.Schema(
   {
@@ -20,6 +20,10 @@ const interviewSchema = new mongoose.Schema(
 // 通过 Schema 来创建相应的数据模型
 // 创建数据模型的方法为 mongoose.model，只传一个名字，代表查找到对应名字的模型
 // 如果传入 Schema，代表创建模型 (1) 给模型取一个名字 （2）对应的 Schema （3）对应的集合
+interviewSchema.pre('save', function (next) {
+  this.onShelfDate = moment().format('YYYY-MM-DD HH:mm:ss')
+  next()
+})
 
 mongoose.model("interviewModel", interviewSchema, "interviews");
 
