@@ -1,4 +1,3 @@
-import { checkAdminIsExist } from '@/services/AdminController';
 import { PageContainer } from '@ant-design/pro-components';
 import { useDispatch, useNavigate } from '@umijs/max';
 import { message } from 'antd';
@@ -16,12 +15,6 @@ function AddAdmin(props) {
     permission: 2,
   });
   async function submitHandle() {
-    // const { data } = await checkAdminIsExist(newAdminInfo.loginId);
-    // console.log('🦊 > file: addAdmin.jsx:20 > submitHandle > data:', data);
-    // if (!data) {
-    //   message.error('用户名已存在');
-    //   return;
-    // }
     dispatch({ type: 'admin/_addAdmin', payload: newAdminInfo });
     message.success('添加成功');
     navigate('/admin/adminList');

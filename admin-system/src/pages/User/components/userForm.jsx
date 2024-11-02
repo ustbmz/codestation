@@ -1,13 +1,15 @@
-import { checkAdminIsExist } from '@/services/AdminController';
+import { checkUserIsExist } from '@/services/UserController';
 import { PlusOutlined } from '@ant-design/icons';
-import { Button, Form, Image, Input, Radio, Upload } from 'antd';
-import { useRef, useState } from 'react';
+import { Button, Form, Image, Input, Upload } from 'antd';
+import { useEffect, useRef, useState } from 'react';
 
-function AdminForm ({ type, adminInfo, setAdminInfo, submitHandle }) {
-  const adminRef = useRef()
-  if (adminRef.current) {
-    adminRef.current.setFieldsValue(adminInfo)
+function UserForm({ type, userInfo, setUserInfo, submitHandle }) {
+  const formRef = useRef();
+  if (formRef.current) {
+    formRef.current.setFieldsValue(userInfo);
   }
+  // useEffect(() => {
+  // }, [userInfo]);
 
   const [previewImage, setPreviewImage] = useState('');
   const [previewOpen, setPreviewOpen] = useState(false);
@@ -17,11 +19,11 @@ function AdminForm ({ type, adminInfo, setAdminInfo, submitHandle }) {
    * @param {*} key
    */
   function updateInfo(value, key) {
-    console.log('🦊 > file: adminForm.jsx:20 > updateInfo > key:', key);
-    console.log('🦊 > file: adminForm.jsx:20 > updateInfo > value:', value);
-    const newAdminInfo = { ...adminInfo };
-    newAdminInfo[key] = value;
-    setAdminInfo(newAdminInfo);
+    console.log('🦊 > file: userForm.jsx:20 > updateInfo > key:', key);
+    console.log('🦊 > file: userForm.jsx:20 > updateInfo > value:', value);
+    const newUserInfo = { ...userInfo };
+    newUserInfo[key] = value;
+    setUserInfo(newUserInfo);
   }
   const handlePreview = async (file) => {
     if (!file.url && !file.preview) {
@@ -34,7 +36,7 @@ function AdminForm ({ type, adminInfo, setAdminInfo, submitHandle }) {
   const changeAvatar = async (file) => {
     console.log('file', file);
     const base64 = await getBase64(file.originFileObj);
-    console.log('🦊 > file: adminForm.jsx:34 > changeAvatar > base64:', base64);
+    console.log('🦊 > file: userForm.jsx:34 > changeAvatar > base64:', base64);
     updateInfo(base64, 'avatar');
   };
   const getBase64 = (file) =>
@@ -45,75 +47,83 @@ function AdminForm ({ type, adminInfo, setAdminInfo, submitHandle }) {
       reader.onerror = (error) => reject(error);
     });
 
-  async function checkLoginID () {
+  async function checkLoginID() {
     if (type === 'edit') {
-      return true
+      return true;
     }
-    console.log('🦊 > file: adminForm.jsx:48 > checkLoginID > checkLoginID:');
-    const { data } = await checkAdminIsExist(adminInfo.loginId);
-    console.log('🦊 > file: adminForm.jsx:44 > checkLoginID > data:', data);
+    console.log('🦊 > file: userForm.jsx:48 > checkLoginID > checkLoginID:');
+    const { data } = await checkUserIsExist(userInfo.loginId);
+    console.log('🦊 > file: userForm.jsx:44 > checkLoginID > data:', data);
     if (data) {
       return Promise.reject('账号已存在，请确认后重新输入');
     }
   }
   return (
     <Form
-      initialValues={adminInfo}
+      initialValues={userInfo}
       autoComplete="off"
-      actionRef='adminRef'
+      ref={formRef}
       onFinish={submitHandle}
       labelCol={{ span: 6 }}
       wrapperCol={{ span: 16 }}
     >
       {/* 账号 */}
       <Form.Item
-        label="管理员账号"
+        label="用户账号"
         name="loginId"
         rules={[
-          { required: true, message: '请输入管理员账号' },
+          { required: true, message: '请输入用户账号' },
           { validateTrigger: 'onBlur', validator: checkLoginID },
         ]}
       >
         <Input
-          value={adminInfo?.loginId}
+          value={userInfo?.loginId}
           onChange={(e) => updateInfo(e.target.value, 'loginId')}
           disabled={type === 'edit' ? true : false}
         ></Input>
       </Form.Item>
       {/* 密码 */}
       <Form.Item
-        label="管理员密码"
+        label="用户密码"
         name="loginPwd"
         rules={[
           type === 'edit'
-            ? { required: true, message: '请输入管理员密码' }
+            ? { required: true, message: '请输入用户密码' }
             : null,
         ]}
       >
         <Input
-          value={adminInfo?.loginPwd}
+          value={userInfo?.loginPwd}
           onChange={(e) => updateInfo(e.target.value, 'loginPwd')}
         ></Input>
       </Form.Item>
       {/* 昵称 */}
 
-      <Form.Item label="管理员昵称" name="nickname">
+      <Form.Item label="用户昵称" name="nickname">
         <Input
-          value={adminInfo?.nickname}
+          value={userInfo?.nickname}
           onChange={(e) => updateInfo(e.target.value, 'nickname')}
         ></Input>
       </Form.Item>
-      {/* 选择权限 */}
-      <Form.Item label="权限选择" name="permission">
-        <Radio.Group
-          value={adminInfo?.permission}
-          rules={[{ required: true, message: '请选择权限' }]}
-          onChange={(e) => updateInfo(e.target.value, 'permission')}
-        >
-          <Radio value={1}>超级管理员</Radio>
-          <Radio value={2}>普通管理员</Radio>
-        </Radio.Group>
+      <Form.Item label="用户邮箱" name="mail">
+        <Input
+          value={userInfo?.mail}
+          onChange={(e) => updateInfo(e.target.value, 'mail')}
+        ></Input>
       </Form.Item>
+      <Form.Item label="QQ" name="qq">
+        <Input
+          value={userInfo?.qq}
+          onChange={(e) => updateInfo(e.target.value, 'qq')}
+        ></Input>
+      </Form.Item>
+      <Form.Item label="微信" name="wechat">
+        <Input
+          value={userInfo?.wechat}
+          onChange={(e) => updateInfo(e.target.value, 'wechat')}
+        ></Input>
+      </Form.Item>
+      {/* 选择权限 */}
       <Form.Item label="上传头像" value="avatar">
         <Upload
           listType="picture-card"
@@ -142,11 +152,11 @@ function AdminForm ({ type, adminInfo, setAdminInfo, submitHandle }) {
       </Form.Item>
       <Form.Item wrapperCol={{ offset: 6, span: 16 }}>
         <Button type="primary" htmlType="submit">
-          {type==='edit'?'确认修改':'新增管理员'}
+          {type === 'edit' ? '确认修改' : '新增用户'}
         </Button>
       </Form.Item>
     </Form>
   );
 }
 
-export default AdminForm;
+export default UserForm;
