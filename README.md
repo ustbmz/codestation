@@ -1,8 +1,12 @@
-此工程为React 演练项目
+# React 演练项目
+
+快速掌握react 基础认识,熟悉常用三方库及 UI 组件库
+
+
 
 ## csFront 项目总结
 
-入门篇
+![image-20241114212630324](https://s2.loli.net/2024/11/14/hcR1wqX6MkV2WaB.png)
 
 - *React* 核心知识（你必须要掌握的）
   - 基础语法
@@ -14,6 +18,8 @@
 
 
 ## csAdmin项目总结
+
+![image-20241114212712911](https://s2.loli.net/2024/11/14/i5V7STChPrwcjKY.png)
 
 - *dva*
 - *antd* 组件库以及 *antd pro* 后台集成方案
@@ -29,11 +35,11 @@
 
 express + mongoose  + nodejs 实现前后台项目的接口服务
 
+![image-20241114212757440](https://s2.loli.net/2024/11/14/oAuX25SNv36Zfyp.png)
 
 
 
-
-后续开发：
+剩余功能点：
 
 1. 实现docker 自动化部署
 2. 前端后剩余页面待完善（如技术相似暂无开发计划）
