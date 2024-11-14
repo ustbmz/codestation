@@ -40,7 +40,7 @@ router.post('/login', async function (req, res, next) {
 })
 
 /**
- * 用户恢复登录
+ * 管理员登录
  */
 router.get('/whoami', async function (req, res, next) {
   // 1. 从客户端请求头的 Authorization 字段拿到 token，然后进行解析

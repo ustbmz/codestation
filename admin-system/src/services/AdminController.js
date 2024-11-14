@@ -31,3 +31,28 @@ export async function checkAdminIsExist(loginId) {
     method: 'GET',
   });
 }
+
+export async function getCaptcha() {
+  return request('/api/captcha', {
+    method: 'GET',
+  });
+}
+
+export async function login(data) {
+  return request('/api/admin/login', {
+    method: 'POST',
+    data,
+  });
+}
+
+export async function getInfo() {
+  return request('/api/admin/whoami', {
+    method: 'GET',
+  });
+}
+
+export async function getAdminById(id) {
+  return request(`/api/admin/${id}`, {
+    method: 'GET',
+  });
+}

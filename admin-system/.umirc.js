@@ -103,7 +103,12 @@ export default defineConfig({
       component: './Type',
       icon: 'AppstoreAddOutlined',
     },
-
+    {
+      path: '/login',
+      component: './Login',
+      // 当前路由不展示菜单
+      menuRender: false,
+    },
     // {
     //   name: '权限演示',
     //   path: '/access',

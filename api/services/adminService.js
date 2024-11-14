@@ -22,56 +22,65 @@ module.exports.findAllAdminService = async function () {
   return await adminModal.find({})
 }
 
-// /**
-//  * 登录的业务逻辑
-//  * @param {*} loginInfo
-//  */
-// module.exports.loginService = async function (loginInfo) {
-//   // 1. 首先对用户输入的密码进行加密
-//   loginInfo.loginPwd = md5(loginInfo.loginPwd);
+/**
+ * 登录的业务逻辑
+ * @param {*} loginInfo
+ */
+module.exports.loginService = async function (loginInfo) {
+  // 1. 首先对用户输入的密码进行加密
+  loginInfo.loginPwd = md5(loginInfo.loginPwd);
 
-//   // 2. 接下来调用持久层的方法进行查询
-//   let data = await loginDao(loginInfo);
-
-//   // 3. 根据查询结果，来决定是否添加 token
-//   if (data) {
-//     // 说明用户填写的账号密码正确
-
-//     // 接下来需要判断该管理员的状态
-//     if (!data.enabled) {
-//       return {
-//         data: {
-//           _id: data._id,
-//           loginId: data.loginId,
-//           enabled: data.enabled,
-//         },
-//       };
-//     }
-//     // 添加 token
-//     data = {
-//       _id: data._id,
-//       loginId: data.loginId,
-//       enabled: data.enabled,
-//     };
-//     var loginPeriod = 1; // token 的有效时间默认是 1 天
-//     if (loginInfo.remember) {
-//       // 进入此 if，说明用户勾选了 7 天有效，token 的有效时长就为 7 天
-//       loginPeriod = process.env.LOGIN_PERIOD;
-//     }
-//     // 生成 token
-//     const token = jwt.sign(data, md5(process.env.JWT_SECRET), {
-//       expiresIn: 60 * 60 * 24 * loginPeriod,
-//     });
-//     return {
-//       data,
-//       token,
-//     };
-//   }
-//   // 没有进入上面的 if，说明账号密码不正确
-//   return {
-//     data,
-//   };
-// };
+  // 2. 接下来调用持久层的方法进行查询
+  let data = await adminModal.findOne({
+    loginId: loginInfo.loginId
+  })
+  // 3. 根据查询结果，来决定是否添加 token
+  if (data) {
+    // 说明用户填写的账号密码正确
+    if (data.loginPwd !== loginInfo.loginPwd) {
+      return {
+        code: 500,
+        msg: '账号或密码不正确',
+        data:null
+      }
+    }
+    // 接下来需要判断该管理员的状态
+    if (!data.enabled) {
+      return {
+        code: 0,
+        data: {
+          _id: data._id,
+          loginId: data.loginId,
+          enabled: data.enabled,
+        },
+      }
+    }
+    // 添加 token
+    data = {
+      _id: data._id,
+      loginId: data.loginId,
+      enabled: data.enabled,
+    };
+    var loginPeriod = 1; // token 的有效时间默认是 1 天
+    if (loginInfo.remember) {
+      // 进入此 if，说明用户勾选了 7 天有效，token 的有效时长就为 7 天
+      loginPeriod = process.env.LOGIN_PERIOD;
+    }
+    // 生成 token
+    const token = jwt.sign(data, md5(process.env.JWT_SECRET), {
+      expiresIn: 60 * 60 * 24 * loginPeriod,
+    });
+    return {
+      code: 0,
+      data,
+      token,
+    };
+  }
+  // 没有进入上面的 if，说明账号密码不正确
+  return {
+    data,
+  };
+};
 
 // /**
 //  * 添加一个新的管理员
@@ -117,9 +126,11 @@ module.exports.deleteAdminService = async function (id) {
 //  * @param {*} id
 //  * @returns
 //  */
-// module.exports.findAdminByIdService = async function (id) {
-//   return await findAdminByIdDao(id);
-// };
+module.exports.findAdminByIdService = async function (id) {
+  return await adminModal.findOne({
+    _id: id,
+  })
+};
 
 // /**
 //  * 根据 id 来更新管理员信息

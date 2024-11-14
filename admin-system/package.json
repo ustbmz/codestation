@@ -14,7 +14,8 @@
     "@ant-design/icons": "^5.0.1",
     "@ant-design/pro-components": "^2.4.4",
     "@umijs/max": "^4.3.28",
-    "antd": "^5.4.0"
+    "antd": "^5.4.0",
+    "react-canvas-nest": "^1.1.1"
   },
   "devDependencies": {
     "@toast-ui/react-editor": "^3.2.3",

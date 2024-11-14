@@ -47,7 +47,7 @@ app.use("/api/admin", adminRouter);
 app.use("/api/user", userRouter);
 // app.use('/api/addUser', userRouter)
 // app.use('/api/login', userRouter)
-// app.use('/api/whoami', userRouter)
+app.use('/api/whoami', userRouter)
 // app.use('/api/:id', userRouter)
 
 
