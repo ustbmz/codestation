@@ -5,7 +5,7 @@
 const mongoose = require('mongoose')
 
 // 定义链接数据库字符串
-const dbURI = 'mongodb://admin:admin123@mongdb-mongo-1:27017/codestation'
+const dbURI = 'mongodb://code:IamMZ0129***@127.0.0.1:27017/coderstation'
 
 mongoose.connect(dbURI, {
   // useNewUrlParser: true,

@@ -25,7 +25,7 @@ function App() {
   useEffect(() => {
     async function getInfo() {
       const { data } = await getInfoWithToken()
-      if (data._id) {
+      if (data?._id) {
         const res = await getUserById(data._id)
         dispatch(initUserInfo(res.data))
         dispatch(changeLoginStatus(true))
