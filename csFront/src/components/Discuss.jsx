@@ -4,13 +4,13 @@ import { Avatar, Comment, Form, Button, List, Tooltip, message } from 'antd'
 import { Editor } from '@toast-ui/react-editor'
 import { getIssueComment, addComment } from '../api/comment'
 import { formatDate } from '../utils'
-import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 function Discuss(props) {
+  const { t, i18n } = useTranslation()
   console.log('🐤 ≂ props:', props)
   const { userInfo, isLogin } = useSelector((state) => state.user)
   const [commenList, setCommentList] = useState([])
-  const navigate = useNavigate()
   const editorRef = useRef()
   let avatar = null
   if (isLogin) {
@@ -50,7 +50,7 @@ function Discuss(props) {
       let result = await addComment(comment)
       console.log('🐤 ≂ result:', result);
       if (result) {
-        message.success('评论成功,')
+        message.success(t('discuss.success'))
       }
     }
   }
@@ -67,14 +67,14 @@ function Discuss(props) {
                 previewStyle="vertical"
                 height="300px"
                 initialEditType="wysiwyg"
-                language={'zh-CN'}
+                language={i18n.language?.startsWith('en') ? 'en-US' : 'zh-CN'}
                 useCommandShortcut={true}
                 ref={editorRef}
               />
             </Form.Item>
             <Form.Item>
               <Button disabled={isLogin ? false : true} type="primary" onClick={submitComment}>
-                提交评论
+                {t('discuss.submit')}
               </Button>
             </Form.Item>
           </>
@@ -82,7 +82,7 @@ function Discuss(props) {
       ></Comment>
       {commenList.length > 0 && (
         <List
-          header="当前评论"
+          header={t('discuss.listHeader')}
           dataSource={commenList}
           renderItem={(item) => (
             <Comment

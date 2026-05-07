@@ -1,0 +1,108 @@
+{
+  "lang": { "zh": "中文", "en": "English", "switch": "语言" },
+  "nav": {
+    "issues": "问答",
+    "books": "书籍",
+    "interviews": "面试题",
+    "video": "视频教程"
+  },
+  "search": {
+    "typeIssue": "问答",
+    "typeBook": "书籍",
+    "placeholder": "请输入要搜索的内容",
+    "button": "搜索"
+  },
+  "footer": {
+    "friendLinks": "友情链接：",
+    "copyright": "© 2024 - Coder Station",
+    "powered": "Powered by React"
+  },
+  "login": {
+    "modalTitle": "登录",
+    "tabLogin": "登录",
+    "tabRegister": "注册",
+    "loginId": "登录账号",
+    "loginPwd": "登录密码",
+    "nickname": "用户昵称",
+    "captcha": "验证码",
+    "remember": "记住我",
+    "btnLogin": "登录",
+    "btnRegister": "注册",
+    "btnReset": "重置",
+    "placeholderLoginId": "请输入你的登录账号",
+    "placeholderLoginPwd": "请输入你的登录密码，新用户默认为123456",
+    "placeholderCaptcha": "请输入验证码",
+    "placeholderRegisterId": "请输入账号",
+    "placeholderNickname": "请输入昵称，不填写默认为新用户xxx",
+    "ruleAccount": "请输入账号",
+    "rulePassword": "请输入密码",
+    "ruleCaptcha": "请输入验证码",
+    "ruleRegisterAccount": "请输入账号，仅此项为必填项",
+    "registerSuccess": "用户注册成功，默认密码为 123456",
+    "userExists": "该用户已经注册过了",
+    "registerLogin": "注册登录"
+  },
+  "avatar": { "profile": "个人中心", "logout": "退出登录" },
+  "issues": {
+    "title": "问答列表",
+    "loginFirst": "请先登陆",
+    "noData": "暂无相关问答",
+    "askQuestion": "我要提问"
+  },
+  "issueDetail": { "title": "问答详情", "publishedAt": "发布于:" },
+  "issueItem": { "answers": "回答", "views": "浏览" },
+  "addIssue": {
+    "titleLabel": "标题",
+    "titlePlaceholder": "请输入标题",
+    "titleRequired": "请输入标题",
+    "typeLabel": "问题分类",
+    "typeRequired": "请选择问题分类",
+    "contentLabel": "问题描述",
+    "contentRequired": "请填写问题描述",
+    "submit": "提交问题",
+    "submitSuccess": "您的问题已经提交，审核通过后，将会进行展示",
+    "editorPlaceholder": "请在此描述你的问题…"
+  },
+  "books": {
+    "title": "图书页面正在开发中",
+    "subtitle": "我们正在努力为您打造更好的阅读体验，敬请期待！",
+    "backHome": "返回首页",
+    "progress": "查看项目进度"
+  },
+  "interviews": { "title": "面试题大全", "emptyHint": "请从左侧选择一个面试题" },
+  "searchPage": { "title": "搜索列表" },
+  "personal": {
+    "title": "个人中心",
+    "editProfile": "编辑资料",
+    "userInfo": "用户信息",
+    "account": "账号",
+    "mail": "邮箱",
+    "qq": "QQ",
+    "wechat": "微信号",
+    "registerTime": "注册时间",
+    "points": "积分",
+    "introTitle": "个人介绍",
+    "expand": "展开",
+    "modalTitle": "编辑个人信息",
+    "introField": "个人介绍"
+  },
+  "notFound": {
+    "title": "404",
+    "subtitle": "抱歉，您访问的页面不存在。",
+    "backHome": "返回首页"
+  },
+  "typeSelect": { "all": "全部" },
+  "recommend": {
+    "title": "推荐内容",
+    "item1": "利用思否猫素材实现一个丝滑的轮播图（html + css + js）",
+    "item2": "「🌟技术探索🌟」借助 CI / CD 实现前端应用的快速回滚",
+    "item3": "面试说：聊聊JavaScript中的数据类型",
+    "item4": "单标签实现复杂的棋盘布局"
+  },
+  "scoreRank": { "title": "积分排行" },
+  "discuss": {
+    "submit": "提交评论",
+    "success": "评论成功",
+    "listHeader": "当前评论"
+  }
+}

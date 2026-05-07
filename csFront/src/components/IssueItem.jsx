@@ -6,7 +6,9 @@ import { getTypeList } from '../redux/typeSlice'
 import { Tag } from 'antd'
 import { getUserById } from '../api/user'
 import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 function IssueItem(props) {
+  const { t } = useTranslation()
   const [userInfo, setUserIfno] = useState({})
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -49,11 +51,11 @@ function IssueItem(props) {
         <div className={styles.commentNumber}>
           {props.issueInfo.commentNumber}
         </div>
-        <div>回答</div>
+        <div>{t('issueItem.answers')}</div>
       </div>
       <div className={styles.issueNum}>
         <div className={styles.scanNumber}>{props.issueInfo.scanNumber}</div>
-        <div>浏览</div>
+        <div>{t('issueItem.views')}</div>
       </div>
       <div className={styles.issueContainer}>
         <div className={styles.top} onClick={()=>{

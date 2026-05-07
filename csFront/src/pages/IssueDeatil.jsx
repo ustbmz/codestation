@@ -7,8 +7,10 @@ import Recommend from '../components/Recommend'
 import ScoreRank from '../components/ScoreRank'
 import Discuss from '../components/Discuss'
 import { formatDate } from '../utils/index'
+import { useTranslation } from 'react-i18next'
 
 function IssueDeatil(props) {
+  const { t } = useTranslation()
   const { id } = useParams()
   const [issueInfo, setIssueInfo] = useState({})
   const [userInfo, setUserInfo] = useState({})
@@ -24,14 +26,14 @@ function IssueDeatil(props) {
 
   return (
     <div className={styles.container}>
-      <PageHeader title="问答详情" />
+      <PageHeader title={t('issueDetail.title')} />
       <div className={styles.detailContainer}>
         <div className={styles.leftSide}>
           <div className={styles.question}>
             <h1>{issueInfo.issueTitle}</h1>
             <div className={styles.questioner}>
               <span className={styles.user}>{userInfo.nickname}</span>
-              <span>发布于:{formatDate(issueInfo.issueDate)}</span>
+              <span>{t('issueDetail.publishedAt')}{formatDate(issueInfo.issueDate)}</span>
             </div>
             <div className={styles.content}>
               <div

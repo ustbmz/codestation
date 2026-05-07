@@ -2,13 +2,15 @@ import React from 'react'
 import { Card, Carousel } from 'antd'
 import RecommendItem from './RecommendItem'
 import styles from '../css/Recommend.module.css'
+import { useTranslation } from 'react-i18next'
 
 /**
  * 右侧的推荐组件
  */
 function Recommend(props) {
+  const { t } = useTranslation()
   return (
-    <Card title="推荐内容">
+    <Card title={t('recommend.title')}>
       {/* 上方轮播图 */}
       <div style={{ marginBottom: 20 }}>
         <Carousel autoplay>
@@ -66,28 +68,28 @@ function Recommend(props) {
       <RecommendItem
         recommendInfo={{
           num: 1,
-          title: '利用思否猫素材实现一个丝滑的轮播图（html + css + js）',
+          title: t('recommend.item1'),
           href: 'https://segmentfault.com/a/1190000042661646',
         }}
       />
       <RecommendItem
         recommendInfo={{
           num: 2,
-          title: '「🌟技术探索🌟」借助 CI / CD 实现前端应用的快速回滚',
+          title: t('recommend.item2'),
           href: 'https://segmentfault.com/a/1190000042531062',
         }}
       />
       <RecommendItem
         recommendInfo={{
           num: 3,
-          title: '面试说：聊聊JavaScript中的数据类型',
+          title: t('recommend.item3'),
           href: 'https://segmentfault.com/a/1190000042539876',
         }}
       />
       <RecommendItem
         recommendInfo={{
           num: 4,
-          title: '单标签实现复杂的棋盘布局',
+          title: t('recommend.item4'),
           href: 'https://segmentfault.com/a/1190000042513947',
         }}
       />

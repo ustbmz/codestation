@@ -7,10 +7,12 @@ import '@toast-ui/editor/dist/toastui-editor.css'
 import { Editor } from '@toast-ui/react-editor'
 import { addIssue } from '../api/issues'
 import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 const { Option } = Select
 
 function AddIssuePage(props) {
+  const { t, i18n } = useTranslation()
   const FormRef = useRef()
   const editorRef = useRef()
   const dispatch = useDispatch()
@@ -55,7 +57,7 @@ function AddIssuePage(props) {
       console.log('~ res', res)
       if (res) {
         navigate('/')
-        message.success('您的问题已经提交，审核通过后，将会进行展示')
+        message.success(t('addIssue.submitSuccess'))
       }
     })
   }
@@ -99,18 +101,18 @@ function AddIssuePage(props) {
       >
         <Form.Item
           name={'issueTitle'}
-          label="标题"
-          rules={[{ required: true, message: 'Please input your Title!' }]}
+          label={t('addIssue.titleLabel')}
+          rules={[{ required: true, message: t('addIssue.titleRequired') }]}
         >
-          <Input placeholder="请输入标题" size="large" />
+          <Input placeholder={t('addIssue.titlePlaceholder')} size="large" />
         </Form.Item>
         <Form.Item
           name={'typeId'}
-          label="问题分类"
+          label={t('addIssue.typeLabel')}
           rules={[
             {
               required: true,
-              message: 'Please choose your question type!',
+              message: t('addIssue.typeRequired'),
             },
           ]}
         >
@@ -126,20 +128,20 @@ function AddIssuePage(props) {
         </Form.Item>
         <Form.Item
           name={'content'}
-          label="问题描述"
+          label={t('addIssue.contentLabel')}
           rules={[
             {
               required: true,
-              message: 'Please choose your question content!',
+              message: t('addIssue.contentRequired'),
             },
           ]}
         >
           <Editor
-            initialValue="hello react editor world!"
+            initialValue={t('addIssue.editorPlaceholder')}
             previewStyle="vertical"
             height="600px"
             initialEditType="wysiwyg"
-            language={'zh-CN'}
+            language={i18n.language?.startsWith('en') ? 'en-US' : 'zh-CN'}
             useCommandShortcut={true}
             ref={editorRef}
           />
@@ -147,7 +149,7 @@ function AddIssuePage(props) {
 
         <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 2 }}>
           <Button type="primary" htmlType="submit">
-            提交问题
+            {t('addIssue.submit')}
           </Button>
         </Form.Item>
       </Form>

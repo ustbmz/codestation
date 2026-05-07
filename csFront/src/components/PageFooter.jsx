@@ -1,10 +1,12 @@
-import React from 'react';
+import React from 'react'
+import { useTranslation } from 'react-i18next'
 
 function PageFooter(props) {
+  const { t } = useTranslation()
     return (
       <div>
         <p className="links">
-          <span className="linkItem">友情链接：</span>
+          <span className="linkItem">{t('footer.friendLinks')}</span>
           <a
             href="https://github.com/ustbmz/codestation"
             target="_blank"
@@ -22,8 +24,8 @@ function PageFooter(props) {
             Blog
           </a>
         </p>
-        <p>© 2024 - Coder Station</p>
-        <p>Powered React</p>
+        <p>{t('footer.copyright')}</p>
+        <p>{t('footer.powered')}</p>
       </div>
     )
 }

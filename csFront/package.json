@@ -9,9 +9,12 @@
     "@testing-library/user-event": "^13.5.0",
     "antd": "^4.24.1",
     "axios": "^1.7.7",
+    "i18next": "^26.0.10",
+    "i18next-browser-languagedetector": "^8.2.1",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-i18next": "^17.0.7",
     "react-redux": "^9.1.2",
     "react-router-dom": "^6.4.3",
     "react-scripts": "5.0.1",
@@ -44,5 +47,10 @@
   "devDependencies": {
     "@toast-ui/react-editor": "^3.2.3",
     "md5": "^2.3.0"
+  },
+  "overrides": {
+    "ajv-keywords@5.1.0": {
+      "ajv": "^8.17.1"
+    }
   }
 }

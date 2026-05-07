@@ -21,8 +21,10 @@ import { initUserInfo, changeLoginStatus } from '../redux/userSlice'
 import { useDispatch } from 'react-redux'
 import md5 from 'md5'
 import styles from '../css/LoginForm.module.css'
+import { useTranslation } from 'react-i18next'
 
 function LoginForm(props) {
+  const { t } = useTranslation()
   const [value, setValue] = useState(1)
   const loginFormRef = useRef()
   const registerFormRef = useRef()
@@ -100,7 +102,7 @@ function LoginForm(props) {
     registerInfo.loginPwd = md5('admin123')
     const result = await addUser(registerInfo)
     if (result.data) {
-      message.success('用户注册成功，默认密码为 123456')
+      message.success(t('login.registerSuccess'))
       // 还需要将用户的信息存储到数据仓库里面
       dispatch(initUserInfo(result.data))
       // 将数据仓库的登录状态进行修改
@@ -138,7 +140,7 @@ function LoginForm(props) {
       const { data } = await userIsExist(registerInfo.loginId)
       if (data) {
         // 该 loginId 已经注册过了
-        return Promise.reject('该用户已经注册过了')
+        return Promise.reject(t('login.userExists'))
       }
     }
   }
@@ -158,17 +160,17 @@ function LoginForm(props) {
           {...formLayout}
         >
           <Form.Item
-            label="登录账号"
+            label={t('login.loginId')}
             name="loginId"
             rules={[
               {
                 required: true,
-                message: '请输入账号',
+                message: t('login.ruleAccount'),
               },
             ]}
           >
             <Input
-              placeholder="请输入你的登录账号"
+              placeholder={t('login.placeholderLoginId')}
               value={loginInfo.loginId}
               onChange={(e) =>
                 updateInfo(loginInfo, e.target.value, 'loginId', setLoginInfo)
@@ -177,17 +179,17 @@ function LoginForm(props) {
           </Form.Item>
 
           <Form.Item
-            label="登录密码"
+            label={t('login.loginPwd')}
             name="loginPwd"
             rules={[
               {
                 required: true,
-                message: '请输入密码',
+                message: t('login.rulePassword'),
               },
             ]}
           >
             <Input.Password
-              placeholder="请输入你的登录密码，新用户默认为123456"
+              placeholder={t('login.placeholderLoginPwd')}
               value={loginInfo.loginPwd}
               onChange={(e) =>
                 updateInfo(loginInfo, e.target.value, 'loginPwd', setLoginInfo)
@@ -198,18 +200,18 @@ function LoginForm(props) {
           {/* 验证码 */}
           <Form.Item
             name="logincaptcha"
-            label="验证码"
+            label={t('login.captcha')}
             rules={[
               {
                 required: true,
-                message: '请输入验证码',
+                message: t('login.ruleCaptcha'),
               },
             ]}
           >
             <Row align="middle">
               <Col span={16}>
                 <Input
-                  placeholder="请输入验证码"
+                  placeholder={t('login.placeholderCaptcha')}
                   value={loginInfo.captcha}
                   onChange={(e) =>
                     updateInfo(
@@ -249,7 +251,7 @@ function LoginForm(props) {
               }
               checked={loginInfo.remember}
             >
-              记住我
+              {t('login.remember')}
             </Checkbox>
           </Form.Item>
 
@@ -259,10 +261,10 @@ function LoginForm(props) {
               htmlType="submit"
               style={{ marginRight: 20 }}
             >
-              登录
+              {t('login.btnLogin')}
             </Button>
             <Button type="primary" htmlType="submit">
-              重置
+              {t('login.btnReset')}
             </Button>
           </Form.Item>
         </Form>
@@ -280,20 +282,19 @@ function LoginForm(props) {
           {...formLayout}
         >
           <Form.Item
-            label="登录账号"
+            label={t('login.loginId')}
             name="loginId"
             rules={[
               {
                 required: true,
-                message: '请输入账号，仅此项为必填项',
+                message: t('login.ruleRegisterAccount'),
               },
-              // 验证用户是否已经存在
               { validator: checkLoginIdIsExist },
             ]}
             validateTrigger="onBlur"
           >
             <Input
-              placeholder="请输入账号"
+              placeholder={t('login.placeholderRegisterId')}
               value={registerInfo.loginId}
               onChange={(e) =>
                 updateInfo(
@@ -306,9 +307,9 @@ function LoginForm(props) {
             />
           </Form.Item>
 
-          <Form.Item label="用户昵称" name="nickname">
+          <Form.Item label={t('login.nickname')} name="nickname">
             <Input
-              placeholder="请输入昵称，不填写默认为新用户xxx"
+              placeholder={t('login.placeholderNickname')}
               value={registerInfo.nickname}
               onChange={(e) =>
                 updateInfo(
@@ -323,18 +324,18 @@ function LoginForm(props) {
 
           <Form.Item
             name="registercaptcha"
-            label="验证码"
+            label={t('login.captcha')}
             rules={[
               {
                 required: true,
-                message: '请输入验证码',
+                message: t('login.ruleCaptcha'),
               },
             ]}
           >
             <Row align="middle">
               <Col span={16}>
                 <Input
-                  placeholder="请输入验证码"
+                  placeholder={t('login.placeholderCaptcha')}
                   value={registerInfo.captcha}
                   onChange={(e) =>
                     updateInfo(
@@ -362,10 +363,10 @@ function LoginForm(props) {
               htmlType="submit"
               style={{ marginRight: 20 }}
             >
-              注册
+              {t('login.btnRegister')}
             </Button>
             <Button type="primary" htmlType="submit">
-              重置
+              {t('login.btnReset')}
             </Button>
           </Form.Item>
         </Form>
@@ -376,7 +377,7 @@ function LoginForm(props) {
   return (
     <div>
       <Modal
-        title="登录"
+        title={t('login.modalTitle')}
         open={props.isShow}
         onOk={handleOk}
         onCancel={props.closeModal}
@@ -389,10 +390,10 @@ function LoginForm(props) {
           buttonStyle="solid"
         >
           <Radio.Button value={1} className={styles.radioButton}>
-            登录
+            {t('login.tabLogin')}
           </Radio.Button>
           <Radio.Button value={2} className={styles.radioButton}>
-            注册
+            {t('login.tabRegister')}
           </Radio.Button>
         </Radio.Group>
         {/* 下面需要显示对应功能的表单 */}

@@ -4,8 +4,10 @@ import { Tag } from 'antd'
 import { getTypeList } from '../redux/typeSlice'
 import { useDispatch } from 'react-redux'
 import { updateIssueTypeId } from '../redux/typeSlice'
+import { useTranslation } from 'react-i18next'
 
 function TypeSelect(props) {
+  const { t, i18n } = useTranslation()
   const [tags, setTags] = useState()
   const { typeList } = useSelector((state) => state.type)
 
@@ -42,7 +44,7 @@ function TypeSelect(props) {
           value="all"
           onClick={() => changeType('all')}
         >
-          全部
+          {t('typeSelect.all')}
         </Tag>
       )
       typeList.forEach((item, index) => {
@@ -59,7 +61,7 @@ function TypeSelect(props) {
       })
       setTags(arr)
     }
-  }, [typeList])
+  }, [typeList, i18n.language, t, dispatch])
   return <div>{tags}</div>
 }
 

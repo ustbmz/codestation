@@ -11,8 +11,10 @@ import TypeSelect from '../components/TypeSelect'
 import { Pagination, Button, message } from 'antd'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 function Issues(props) {
+  const { t } = useTranslation()
   const [issues, setIssues] = useState([])
   // 页码
   const [pageInfo, setPageInfo] = useState({
@@ -73,20 +75,20 @@ function Issues(props) {
       console.log('🐤 ≂ isLogin:', isLogin)
       navigate('/addIssue')
     } else {
-      message.warn('请先登陆')
+      message.warn(t('issues.loginFirst'))
     }
   }
 
   return (
     <div className={styles.container}>
-      <PageHeader title="问答列表">
+      <PageHeader title={t('issues.title')}>
         <TypeSelect />
       </PageHeader>
       <div className={styles.issueContainer}>
         <div className={styles.leftSide}>
           {IssueItemList}
           {issues.length === 0 ? (
-            <div className={styles.noIssue}>暂无相关问答</div>
+            <div className={styles.noIssue}>{t('issues.noData')}</div>
           ) : (
             <div className="paginationContainer">
               <Pagination
@@ -112,7 +114,7 @@ function Issues(props) {
               AddIssue()
             }}
           >
-            我要提问
+            {t('issues.askQuestion')}
           </Button>
           <Recommend />
           <ScoreRank />

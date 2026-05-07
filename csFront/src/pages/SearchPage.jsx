@@ -7,8 +7,10 @@ import { Pagination, Button } from 'antd'
 import IssueItem from '../components/IssueItem'
 import { useLocation } from 'react-router-dom'
 import { getIssues } from '../api/issues'
+import { useTranslation } from 'react-i18next'
 
 function SearchPage(props) {
+  const { t } = useTranslation()
   const location = useLocation()
   const { partialName } = location.state
   const [pageInfo, setPageInfo] = useState({
@@ -49,12 +51,12 @@ function SearchPage(props) {
 
   return (
     <div className={styles.container}>
-      <PageHeader title="搜索列表"></PageHeader>
+      <PageHeader title={t('searchPage.title')}></PageHeader>
       <div className={styles.issueContainer}>
         <div className={styles.leftSide}>
           {IssueItemList}
           {issues.length === 0 ? (
-            <div className={styles.noIssue}>暂无相关问答</div>
+            <div className={styles.noIssue}>{t('issues.noData')}</div>
           ) : (
             <div className="paginationContainer">
               <Pagination

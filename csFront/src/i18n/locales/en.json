@@ -1,0 +1,111 @@
+{
+  "lang": { "zh": "中文", "en": "English", "switch": "Language" },
+  "nav": {
+    "issues": "Q&A",
+    "books": "Books",
+    "interviews": "Interview",
+    "video": "Video tutorials"
+  },
+  "search": {
+    "typeIssue": "Q&A",
+    "typeBook": "Books",
+    "placeholder": "Search…",
+    "button": "Search"
+  },
+  "footer": {
+    "friendLinks": "Links: ",
+    "copyright": "© 2024 - Coder Station",
+    "powered": "Powered by React"
+  },
+  "login": {
+    "modalTitle": "Sign in",
+    "tabLogin": "Sign in",
+    "tabRegister": "Sign up",
+    "loginId": "Username",
+    "loginPwd": "Password",
+    "nickname": "Display name",
+    "captcha": "Captcha",
+    "remember": "Remember me",
+    "btnLogin": "Sign in",
+    "btnRegister": "Sign up",
+    "btnReset": "Reset",
+    "placeholderLoginId": "Enter your username",
+    "placeholderLoginPwd": "Password (default for new users: 123456)",
+    "placeholderCaptcha": "Enter captcha",
+    "placeholderRegisterId": "Choose a username",
+    "placeholderNickname": "Nickname (optional)",
+    "ruleAccount": "Username is required",
+    "rulePassword": "Password is required",
+    "ruleCaptcha": "Captcha is required",
+    "ruleRegisterAccount": "Username is required",
+    "registerSuccess": "Signed up. Default password is 123456",
+    "userExists": "Username already taken",
+    "registerLogin": "Sign in / up"
+  },
+  "avatar": { "profile": "Profile", "logout": "Log out" },
+  "issues": {
+    "title": "Q&A list",
+    "loginFirst": "Please sign in first",
+    "noData": "No questions yet",
+    "askQuestion": "Ask a question"
+  },
+  "issueDetail": { "title": "Question detail", "publishedAt": "Posted:" },
+  "issueItem": { "answers": "Answers", "views": "Views" },
+  "addIssue": {
+    "titleLabel": "Title",
+    "titlePlaceholder": "Enter a title",
+    "titleRequired": "Title is required",
+    "typeLabel": "Category",
+    "typeRequired": "Please choose a category",
+    "contentLabel": "Description",
+    "contentRequired": "Please enter a description",
+    "submit": "Submit",
+    "submitSuccess": "Submitted. It will appear after review.",
+    "editorPlaceholder": "Describe your question…"
+  },
+  "books": {
+    "title": "Books page is under construction",
+    "subtitle": "We are improving the reading experience. Stay tuned!",
+    "backHome": "Back to home",
+    "progress": "View project progress"
+  },
+  "interviews": {
+    "title": "Interview questions",
+    "emptyHint": "Pick a question from the tree on the left"
+  },
+  "searchPage": { "title": "Search results" },
+  "personal": {
+    "title": "Profile",
+    "editProfile": "Edit profile",
+    "userInfo": "Account",
+    "account": "Username",
+    "mail": "Email",
+    "qq": "QQ",
+    "wechat": "WeChat",
+    "registerTime": "Joined",
+    "points": "Points",
+    "introTitle": "About",
+    "expand": "more",
+    "modalTitle": "Edit profile",
+    "introField": "Bio"
+  },
+  "notFound": {
+    "title": "404",
+    "subtitle": "Sorry, this page does not exist.",
+    "backHome": "Back to home"
+  },
+  "typeSelect": { "all": "All" },
+  "recommend": {
+    "title": "Recommended",
+    "item1": "Build a smooth carousel (HTML + CSS + JS)",
+    "item2": "CI/CD for quick frontend rollbacks",
+    "item3": "Interview: JavaScript data types",
+    "item4": "Chessboard layout with one element"
+  },
+  "scoreRank": { "title": "Points leaderboard" },
+  "discuss": {
+    "submit": "Post comment",
+    "success": "Comment posted",
+    "listHeader": "Comments"
+  }
+}

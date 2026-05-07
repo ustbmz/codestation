@@ -1,12 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
+import './i18n'
 import App from './App'
+import AntdLocaleProvider from './components/AntdLocaleProvider'
 
 import 'antd/dist/antd.min.css'
 import './index.css'
 
-import zhCN from 'antd/es/locale/zh_CN' // 中文语言包
-import { ConfigProvider } from 'antd'
 import { BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { store } from './redux/store'
@@ -15,9 +15,9 @@ const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
   <Provider store={store}>
     <BrowserRouter>
-      <ConfigProvider locale={zhCN}>
+      <AntdLocaleProvider>
         <App />
-      </ConfigProvider>
+      </AntdLocaleProvider>
     </BrowserRouter>
   </Provider>
 )

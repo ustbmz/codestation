@@ -6,6 +6,7 @@ import styles from '../css/Interview.module.css'
 import { useDispatch, useSelector } from 'react-redux'
 import PageHeader from '../components/PageHeader'
 import { Tree, BackTop, Empty } from 'antd'
+import { useTranslation } from 'react-i18next'
 
 // 面试题树形结构组件
 const InterviewTree = React.memo(({ treeData, onSelect, expandedKeys, onExpand }) => (
@@ -37,6 +38,7 @@ const InterviewContent = React.memo(({ interviewInfo }) => (
 ));
 
 function Interviews() {
+  const { t } = useTranslation()
   const { interviewTitleList } = useSelector((state) => state.interview)
   const { typeList } = useSelector((state) => state.type)
   const [interviewInfo, setInterViewInfo] = useState(null)
@@ -104,7 +106,7 @@ function Interviews() {
 
   return (
     <div className={styles.container}>
-      <PageHeader title="面试题大全" />
+      <PageHeader title={t('interviews.title')} />
       <div className={styles.interviewContainer}>
         <div className={styles.leftSide}>
           <div className={styles.interviewLeftTitle}>
@@ -123,7 +125,7 @@ function Interviews() {
             <div className={styles.emptyContainer}>
               <Empty
                 image={Empty.PRESENTED_IMAGE_SIMPLE}
-                description={<span>请从左侧选择一个面试题</span>}
+                description={<span>{t('interviews.emptyHint')}</span>}
               />
             </div>
           )}
