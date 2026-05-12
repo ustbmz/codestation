@@ -1,9 +1,11 @@
 import { PageContainer } from '@ant-design/pro-components';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useIntl } from '@umijs/max';
 import InterviewForm from './components/interviewForm';
-import { addInterView } from '@/services/InterviewController'
+import { addInterView } from '@/services/InterviewController';
+
 function AddInterview(props) {
+  const intl = useIntl();
   const [interviewInfo, setinterviewInfo] = useState({
     interviewTitle: '',
     interviewContent: '',
@@ -12,11 +14,7 @@ function AddInterview(props) {
 
   const navigator = useNavigate();
   async function submitHandle() {
-    const data = await addInterView(interviewInfo);
-    console.log(
-      '🦊 > file: addInterview.jsx:17 > submitHandle > data:',
-      interviewInfo,
-    );
+    await addInterView(interviewInfo);
     navigator('/interview/interviewList');
   }
 
@@ -26,7 +24,7 @@ function AddInterview(props) {
         background: '#F9F9F9',
       }}
     >
-      <PageContainer>
+      <PageContainer title={intl.formatMessage({ id: 'menu.interview.add' })}>
         <div className="container" style={{ width: '1000' }}>
           <InterviewForm
             type="add"

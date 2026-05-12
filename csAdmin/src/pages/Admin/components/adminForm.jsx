@@ -2,23 +2,20 @@ import { checkAdminIsExist } from '@/services/AdminController';
 import { PlusOutlined } from '@ant-design/icons';
 import { Button, Form, Image, Input, Radio, Upload } from 'antd';
 import { useRef, useState } from 'react';
+import { useIntl } from '@umijs/max';
 
-function AdminForm ({ type, adminInfo, setAdminInfo, submitHandle }) {
-  const adminRef = useRef()
+function AdminForm({ type, adminInfo, setAdminInfo, submitHandle }) {
+  const intl = useIntl();
+  const adminRef = useRef();
   if (adminRef.current) {
-    adminRef.current.setFieldsValue(adminInfo)
+    adminRef.current.setFieldsValue(adminInfo);
   }
 
   const [previewImage, setPreviewImage] = useState('');
   const [previewOpen, setPreviewOpen] = useState(false);
-  /**
-   * 更新表单状态
-   * @param {*} value
-   * @param {*} key
-   */
+
   function updateInfo(value, key) {
     console.log('🦊 > file: adminForm.jsx:20 > updateInfo > key:', key);
-    console.log('🦊 > file: adminForm.jsx:20 > updateInfo > value:', value);
     const newAdminInfo = { ...adminInfo };
     newAdminInfo[key] = value;
     setAdminInfo(newAdminInfo);
@@ -32,9 +29,7 @@ function AdminForm ({ type, adminInfo, setAdminInfo, submitHandle }) {
     setPreviewOpen(true);
   };
   const changeAvatar = async (file) => {
-    console.log('file', file);
     const base64 = await getBase64(file.originFileObj);
-    console.log('🦊 > file: adminForm.jsx:34 > changeAvatar > base64:', base64);
     updateInfo(base64, 'avatar');
   };
   const getBase64 = (file) =>
@@ -45,32 +40,34 @@ function AdminForm ({ type, adminInfo, setAdminInfo, submitHandle }) {
       reader.onerror = (error) => reject(error);
     });
 
-  async function checkLoginID () {
+  async function checkLoginID() {
     if (type === 'edit') {
-      return true
+      return true;
     }
-    console.log('🦊 > file: adminForm.jsx:48 > checkLoginID > checkLoginID:');
     const { data } = await checkAdminIsExist(adminInfo.loginId);
-    console.log('🦊 > file: adminForm.jsx:44 > checkLoginID > data:', data);
     if (data) {
-      return Promise.reject('账号已存在，请确认后重新输入');
+      return Promise.reject(
+        intl.formatMessage({ id: 'admin.form.loginIdExists' }),
+      );
     }
   }
   return (
     <Form
       initialValues={adminInfo}
       autoComplete="off"
-      actionRef='adminRef'
+      actionRef="adminRef"
       onFinish={submitHandle}
       labelCol={{ span: 6 }}
       wrapperCol={{ span: 16 }}
     >
-      {/* 账号 */}
       <Form.Item
-        label="管理员账号"
+        label={intl.formatMessage({ id: 'admin.form.loginId' })}
         name="loginId"
         rules={[
-          { required: true, message: '请输入管理员账号' },
+          {
+            required: true,
+            message: intl.formatMessage({ id: 'admin.form.ruleLoginId' }),
+          },
           { validateTrigger: 'onBlur', validator: checkLoginID },
         ]}
       >
@@ -80,13 +77,15 @@ function AdminForm ({ type, adminInfo, setAdminInfo, submitHandle }) {
           disabled={type === 'edit' ? true : false}
         ></Input>
       </Form.Item>
-      {/* 密码 */}
       <Form.Item
-        label="管理员密码"
+        label={intl.formatMessage({ id: 'admin.form.loginPwd' })}
         name="loginPwd"
         rules={[
           type === 'edit'
-            ? { required: true, message: '请输入管理员密码' }
+            ? {
+                required: true,
+                message: intl.formatMessage({ id: 'admin.form.ruleLoginPwd' }),
+              }
             : null,
         ]}
       >
@@ -95,26 +94,29 @@ function AdminForm ({ type, adminInfo, setAdminInfo, submitHandle }) {
           onChange={(e) => updateInfo(e.target.value, 'loginPwd')}
         ></Input>
       </Form.Item>
-      {/* 昵称 */}
 
-      <Form.Item label="管理员昵称" name="nickname">
+      <Form.Item
+        label={intl.formatMessage({ id: 'admin.form.nickname' })}
+        name="nickname"
+      >
         <Input
           value={adminInfo?.nickname}
           onChange={(e) => updateInfo(e.target.value, 'nickname')}
         ></Input>
       </Form.Item>
-      {/* 选择权限 */}
-      <Form.Item label="权限选择" name="permission">
+      <Form.Item
+        label={intl.formatMessage({ id: 'admin.form.permission' })}
+        name="permission"
+      >
         <Radio.Group
           value={adminInfo?.permission}
-          rules={[{ required: true, message: '请选择权限' }]}
           onChange={(e) => updateInfo(e.target.value, 'permission')}
         >
-          <Radio value={1}>超级管理员</Radio>
-          <Radio value={2}>普通管理员</Radio>
+          <Radio value={1}>{intl.formatMessage({ id: 'admin.role.super' })}</Radio>
+          <Radio value={2}>{intl.formatMessage({ id: 'admin.role.normal' })}</Radio>
         </Radio.Group>
       </Form.Item>
-      <Form.Item label="上传头像" value="avatar">
+      <Form.Item label={intl.formatMessage({ id: 'admin.form.avatar' })} value="avatar">
         <Upload
           listType="picture-card"
           maxCount={1}
@@ -125,7 +127,9 @@ function AdminForm ({ type, adminInfo, setAdminInfo, submitHandle }) {
         >
           <div>
             <PlusOutlined />
-            <div style={{ marginTop: '8px' }}>上传头像</div>
+            <div style={{ marginTop: '8px' }}>
+              {intl.formatMessage({ id: 'admin.form.avatar' })}
+            </div>
           </div>
         </Upload>
         {previewImage && (
@@ -142,7 +146,9 @@ function AdminForm ({ type, adminInfo, setAdminInfo, submitHandle }) {
       </Form.Item>
       <Form.Item wrapperCol={{ offset: 6, span: 16 }}>
         <Button type="primary" htmlType="submit">
-          {type==='edit'?'确认修改':'新增管理员'}
+          {type === 'edit'
+            ? intl.formatMessage({ id: 'admin.form.submitEdit' })
+            : intl.formatMessage({ id: 'admin.form.submitAdd' })}
         </Button>
       </Form.Item>
     </Form>

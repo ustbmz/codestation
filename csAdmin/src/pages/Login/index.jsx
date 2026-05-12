@@ -3,9 +3,11 @@ import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Checkbox, Col, Form, Input, message, Row } from 'antd';
 import { useEffect, useState } from 'react';
 import styles from './index.module.css';
-import { useNavigate } from '@umijs/max';
+import { useNavigate, useIntl } from '@umijs/max';
 import ReactCanvasNest from 'react-canvas-nest';
+
 function Login(props) {
+  const intl = useIntl();
   const [loginInfo, setLoginInfo] = useState({
     loginId: '',
     loginPwd: '',
@@ -27,7 +29,7 @@ function Login(props) {
         navigate('/');
       } else {
         message.error(res.msg);
-        captchaClickHandle()
+        captchaClickHandle();
       }
     });
   }
@@ -52,7 +54,7 @@ function Login(props) {
         style={{ zIndex: 66 }}
       />
       <div className={styles.container}>
-        <h1>Code后端管理系统</h1>
+        <h1>{intl.formatMessage({ id: 'login.title' })}</h1>
         <Form
           name="normal_login"
           className="login-form"
@@ -61,12 +63,17 @@ function Login(props) {
         >
           <Form.Item
             name="loginId"
-            rules={[{ required: true, message: '请输入用账号' }]}
+            rules={[
+              {
+                required: true,
+                message: intl.formatMessage({ id: 'login.ruleAccount' }),
+              },
+            ]}
           >
             <Input
               prefix={<UserOutlined className="site-form-item-icon" />}
               type="text"
-              placeholder="请输入账号"
+              placeholder={intl.formatMessage({ id: 'login.placeholderAccount' })}
               value={loginInfo.loginId}
               onChange={(e) => {
                 updateInfo(e.target.value, 'loginId');
@@ -75,32 +82,36 @@ function Login(props) {
           </Form.Item>
           <Form.Item
             name="loginPwd"
-            rules={[{ required: true, message: '请输入密码' }]}
+            rules={[
+              {
+                required: true,
+                message: intl.formatMessage({ id: 'login.rulePassword' }),
+              },
+            ]}
           >
             <Input
               prefix={<LockOutlined className="site-form-item-icon" />}
               type="password"
-              placeholder="请输入密码"
-              value={loginInfo.loginId}
+              placeholder={intl.formatMessage({ id: 'login.placeholderPassword' })}
+              value={loginInfo.loginPwd}
               onChange={(e) => {
                 updateInfo(e.target.value, 'loginPwd');
               }}
             ></Input>
           </Form.Item>
-          {/* 验证码 */}
           <Form.Item
             name="captcha"
             rules={[
               {
                 required: true,
-                message: '请输入验证码',
+                message: intl.formatMessage({ id: 'login.ruleCaptcha' }),
               },
             ]}
           >
             <Row align="middle">
               <Col span={16}>
                 <Input
-                  placeholder="请输入验证码"
+                  placeholder={intl.formatMessage({ id: 'login.placeholderCaptcha' })}
                   value={loginInfo.captcha}
                   onChange={(e) => updateInfo(e.target.value, 'captcha')}
                 />
@@ -115,8 +126,8 @@ function Login(props) {
             </Row>
           </Form.Item>
           <Form.Item>
-            <Checkbox onChange={(e) => updateInfo(true, 'remember')}>
-              七天免登录
+            <Checkbox onChange={(e) => updateInfo(e.target.checked, 'remember')}>
+              {intl.formatMessage({ id: 'login.remember' })}
             </Checkbox>
           </Form.Item>
           <Form.Item>
@@ -125,7 +136,7 @@ function Login(props) {
               htmlType="submit"
               className={styles.loginBtn}
             >
-              登录
+              {intl.formatMessage({ id: 'login.submit' })}
             </Button>
           </Form.Item>
         </Form>

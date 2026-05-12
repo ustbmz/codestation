@@ -1,5 +1,8 @@
+import { useIntl } from '@umijs/max';
+
 function Comment(props) {
-  return <div>Comment page</div>;
+  const intl = useIntl();
+  return <div>{intl.formatMessage({ id: 'comment.placeholder' })}</div>;
 }
 
 export default Comment;

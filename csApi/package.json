@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "node ./bin/www"
+    "dev": "node ./scripts/dev.js",
+    "dev:www": "node ./bin/www",
+    "seed:mock": "node ./scripts/seedMockData.js"
   },
   "keywords": [],
   "author": "",
@@ -26,6 +28,7 @@
   },
   "devDependencies": {
     "dayjs": "^1.11.13",
-    "md5": "^2.3.0"
+    "md5": "^2.3.0",
+    "mongodb-memory-server": "^10.1.4"
   }
 }

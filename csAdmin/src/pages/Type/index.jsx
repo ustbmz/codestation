@@ -1,5 +1,8 @@
-function index(props) {
-  return <div>Type Page</div>;
+import { useIntl } from '@umijs/max';
+
+function TypePage(props) {
+  const intl = useIntl();
+  return <div>{intl.formatMessage({ id: 'type.placeholder' })}</div>;
 }
 
-export default index;
+export default TypePage;

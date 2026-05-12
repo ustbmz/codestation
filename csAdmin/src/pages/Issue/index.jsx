@@ -1,5 +1,8 @@
+import { useIntl } from '@umijs/max';
+
 function Issue(props) {
-  return <div>Issue page</div>;
+  const intl = useIntl();
+  return <div>{intl.formatMessage({ id: 'issue.placeholder' })}</div>;
 }
 
 export default Issue;

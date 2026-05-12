@@ -25,6 +25,7 @@ module.exports.findIssueAllService = async function (params) {
 
     Totaldata = await issueModel.countDocuments({
       typeId: typeId,
+      issueStatus: true,
     })
   } else if (partialName) {
     data = await issueModel.findUsersByPartialName(params)
@@ -36,7 +37,7 @@ module.exports.findIssueAllService = async function (params) {
       })
       .skip(skip)
       .limit(pageSize)
-    Totaldata = await issueModel.countDocuments()
+    Totaldata = await issueModel.countDocuments({ issueStatus: true })
   }
   return {
     currentPage: page,

@@ -1,26 +1,20 @@
 import { checkUserIsExist } from '@/services/UserController';
 import { PlusOutlined } from '@ant-design/icons';
 import { Button, Form, Image, Input, Upload } from 'antd';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
+import { useIntl } from '@umijs/max';
 
 function UserForm({ type, userInfo, setUserInfo, submitHandle }) {
+  const intl = useIntl();
   const formRef = useRef();
   if (formRef.current) {
     formRef.current.setFieldsValue(userInfo);
   }
-  // useEffect(() => {
-  // }, [userInfo]);
 
   const [previewImage, setPreviewImage] = useState('');
   const [previewOpen, setPreviewOpen] = useState(false);
-  /**
-   * 更新表单状态
-   * @param {*} value
-   * @param {*} key
-   */
+
   function updateInfo(value, key) {
-    console.log('🦊 > file: userForm.jsx:20 > updateInfo > key:', key);
-    console.log('🦊 > file: userForm.jsx:20 > updateInfo > value:', value);
     const newUserInfo = { ...userInfo };
     newUserInfo[key] = value;
     setUserInfo(newUserInfo);
@@ -34,9 +28,7 @@ function UserForm({ type, userInfo, setUserInfo, submitHandle }) {
     setPreviewOpen(true);
   };
   const changeAvatar = async (file) => {
-    console.log('file', file);
     const base64 = await getBase64(file.originFileObj);
-    console.log('🦊 > file: userForm.jsx:34 > changeAvatar > base64:', base64);
     updateInfo(base64, 'avatar');
   };
   const getBase64 = (file) =>
@@ -51,11 +43,11 @@ function UserForm({ type, userInfo, setUserInfo, submitHandle }) {
     if (type === 'edit') {
       return true;
     }
-    console.log('🦊 > file: userForm.jsx:48 > checkLoginID > checkLoginID:');
     const { data } = await checkUserIsExist(userInfo.loginId);
-    console.log('🦊 > file: userForm.jsx:44 > checkLoginID > data:', data);
     if (data) {
-      return Promise.reject('账号已存在，请确认后重新输入');
+      return Promise.reject(
+        intl.formatMessage({ id: 'user.form.loginIdExists' }),
+      );
     }
   }
   return (
@@ -67,12 +59,14 @@ function UserForm({ type, userInfo, setUserInfo, submitHandle }) {
       labelCol={{ span: 6 }}
       wrapperCol={{ span: 16 }}
     >
-      {/* 账号 */}
       <Form.Item
-        label="用户账号"
+        label={intl.formatMessage({ id: 'user.form.loginId' })}
         name="loginId"
         rules={[
-          { required: true, message: '请输入用户账号' },
+          {
+            required: true,
+            message: intl.formatMessage({ id: 'user.form.ruleLoginId' }),
+          },
           { validateTrigger: 'onBlur', validator: checkLoginID },
         ]}
       >
@@ -82,13 +76,15 @@ function UserForm({ type, userInfo, setUserInfo, submitHandle }) {
           disabled={type === 'edit' ? true : false}
         ></Input>
       </Form.Item>
-      {/* 密码 */}
       <Form.Item
-        label="用户密码"
+        label={intl.formatMessage({ id: 'user.form.loginPwd' })}
         name="loginPwd"
         rules={[
           type === 'edit'
-            ? { required: true, message: '请输入用户密码' }
+            ? {
+                required: true,
+                message: intl.formatMessage({ id: 'user.form.ruleLoginPwd' }),
+              }
             : null,
         ]}
       >
@@ -97,34 +93,32 @@ function UserForm({ type, userInfo, setUserInfo, submitHandle }) {
           onChange={(e) => updateInfo(e.target.value, 'loginPwd')}
         ></Input>
       </Form.Item>
-      {/* 昵称 */}
 
-      <Form.Item label="用户昵称" name="nickname">
+      <Form.Item label={intl.formatMessage({ id: 'user.form.nickname' })} name="nickname">
         <Input
           value={userInfo?.nickname}
           onChange={(e) => updateInfo(e.target.value, 'nickname')}
         ></Input>
       </Form.Item>
-      <Form.Item label="用户邮箱" name="mail">
+      <Form.Item label={intl.formatMessage({ id: 'user.form.mail' })} name="mail">
         <Input
           value={userInfo?.mail}
           onChange={(e) => updateInfo(e.target.value, 'mail')}
         ></Input>
       </Form.Item>
-      <Form.Item label="QQ" name="qq">
+      <Form.Item label={intl.formatMessage({ id: 'user.form.qq' })} name="qq">
         <Input
           value={userInfo?.qq}
           onChange={(e) => updateInfo(e.target.value, 'qq')}
         ></Input>
       </Form.Item>
-      <Form.Item label="微信" name="wechat">
+      <Form.Item label={intl.formatMessage({ id: 'user.form.wechat' })} name="wechat">
         <Input
           value={userInfo?.wechat}
           onChange={(e) => updateInfo(e.target.value, 'wechat')}
         ></Input>
       </Form.Item>
-      {/* 选择权限 */}
-      <Form.Item label="上传头像" value="avatar">
+      <Form.Item label={intl.formatMessage({ id: 'user.form.avatar' })} value="avatar">
         <Upload
           listType="picture-card"
           maxCount={1}
@@ -135,7 +129,9 @@ function UserForm({ type, userInfo, setUserInfo, submitHandle }) {
         >
           <div>
             <PlusOutlined />
-            <div style={{ marginTop: '8px' }}>上传头像</div>
+            <div style={{ marginTop: '8px' }}>
+              {intl.formatMessage({ id: 'user.form.avatar' })}
+            </div>
           </div>
         </Upload>
         {previewImage && (
@@ -152,7 +148,9 @@ function UserForm({ type, userInfo, setUserInfo, submitHandle }) {
       </Form.Item>
       <Form.Item wrapperCol={{ offset: 6, span: 16 }}>
         <Button type="primary" htmlType="submit">
-          {type === 'edit' ? '确认修改' : '新增用户'}
+          {type === 'edit'
+            ? intl.formatMessage({ id: 'user.form.submitEdit' })
+            : intl.formatMessage({ id: 'user.form.submitAdd' })}
         </Button>
       </Form.Item>
     </Form>
